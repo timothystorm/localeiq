@@ -12,7 +12,6 @@ dependencies = [
     "python-dotenv (>=1.1.1,<2.0.0)"
 ]
 
-
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -20,3 +19,8 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.group.dev.dependencies]
 uvicorn = { extras = ["standard"], version = "^0.35.0" }
 pre-commit = "^4.2.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.4.1"
+httpx = "^0.28.1"
+pytest-asyncio = "^1.0.0"

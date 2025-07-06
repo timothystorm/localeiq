@@ -1,20 +1,17 @@
-from fastapi import FastAPI
 from typing import List, Dict
 
-app = FastAPI(title="Countries API", description="API for retrieving country information", version="1.0.0")
+from fastapi import APIRouter
+
+router = APIRouter()
 
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the Countries API"}
-
-
-@app.get("/countries", response_model=List[Dict[str, str]])
-def list_countries():
+@router.get("/countries", response_model=List[Dict[str, str]])
+def get_country_list():
     """
     Returns a comprehensive list of countries with their ISO codes and names.
+    FIXME: move to datasource
     """
-    countries = [
+    return [
         {"code": "AD", "name": "Andorra"},
         {"code": "AE", "name": "United Arab Emirates"},
         {"code": "AF", "name": "Afghanistan"},
@@ -265,13 +262,11 @@ def list_countries():
         {"code": "ZM", "name": "Zambia"},
         {"code": "ZW", "name": "Zimbabwe"}
     ]
-    
-    return countries
 
 
-@app.get("/countries/count")
+@router.get("/countries/count")
 def countries_count():
     """
     Returns the total number of countries available.
     """
-    return {"total_countries": 249}
+    return {"count": len(get_country_list())}
