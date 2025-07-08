@@ -176,3 +176,19 @@ app.include_router(countries.router)
 ---
 
 Let me know if you want me to generate a ready-to-commit version of this structure!
+
+## Data Sources
+
+Unicode Common Locale Data Repository - https://github.com/unicode-org/cldr-json
+
+## Credits
+
+This project includes data derived from the Unicode Common Locale Data Repository (CLDR).
+
+© Unicode, Inc. All rights reserved.
+Unicode data files are provided “as-is” without warranty of any kind.
+Use of Unicode data is subject to the terms of the Unicode License Agreement:
+https://www.unicode.org/license.html
+
+If any modifications have been made to CLDR data, they are not endorsed by Unicode and may differ from the official CLDR 
+distributions.
