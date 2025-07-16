@@ -1,4 +1,6 @@
 from pydantic import BaseModel
 
-class CountryName(BaseModel):
+
+class Country(BaseModel):
+    code: str
     name: str

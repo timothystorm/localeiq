@@ -120,8 +120,6 @@ class CountryService:
 #### `/repositories/country_repository.py`
 
 ```python
-from localeiq.models.country import Country
-
 class CountryRepository:
     def fetch_countries(self):
         # Example static data (can be swapped with DB later)
@@ -190,5 +188,5 @@ Unicode data files are provided “as-is” without warranty of any kind.
 Use of Unicode data is subject to the terms of the Unicode License Agreement:
 https://www.unicode.org/license.html
 
-If any modifications have been made to CLDR data, they are not endorsed by Unicode and may differ from the official CLDR 
+If any modifications have been made to CLDR data, they are not endorsed by Unicode and may differ from the official CLDR
 distributions.

@@ -3,7 +3,7 @@ name = "localeiq"
 version = "0.1.0"
 description = ""
 authors = [
-    { name = "Your Name", email = "timothystorm@gmail.com" }
+    { name = "Timothy Storm", email = "timothystorm@gmail.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.13"
@@ -19,8 +19,22 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.group.dev.dependencies]
 uvicorn = { extras = ["standard"], version = "^0.35.0" }
 pre-commit = "^4.2.0"
+black = "^25.1.0"
+flake8 = "^7.3.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.4.1"
 httpx = "^0.28.1"
 pytest-asyncio = "^1.0.0"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.venv
+  | build
+  | dist
+)/
+'''
