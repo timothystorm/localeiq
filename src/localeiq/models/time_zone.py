@@ -4,7 +4,18 @@ from pydantic import BaseModel
 
 
 class TimeZone(BaseModel):
-    utc_offset: str  # e.g., "+00:00", "-07:00"
-    iana: str  # e.g., "America/Denver"
-    std_abbreviation: str  # e.g., "MST"
-    dst_abbreviation: Optional[str] = None  # e.g., "MDT" if applicable
+    """
+    Represents time zone information for a geographic region.
+
+    Attributes:
+       utc_offset (str): The UTC offset in the format ±HH:MM (e.g., "-07:00").
+       iana (str): The IANA time zone name (e.g., "America/Denver").
+       std_abbr (str): Abbreviation used during standard time (e.g., "MST").
+       dst_abbr (Optional[str]): Abbreviation used during daylight saving time,
+        if applicable (e.g., "MDT").
+    """
+
+    utc_offset: str
+    iana: str
+    std_abbr: str
+    dst_abbr: Optional[str] = None
