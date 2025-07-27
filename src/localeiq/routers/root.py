@@ -14,5 +14,4 @@ def root():
         name="LocaleIQ API",
         version="1.0.0",
         description="Provides internationalization and geographic boundary data.",
-        endpoints=["/countries", "/countries/count", "/regions/{postal}"],
     )

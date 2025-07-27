@@ -5,4 +5,3 @@ class RootContext(BaseModel):
     name: str
     version: str
     description: str
-    endpoints: list[str]
