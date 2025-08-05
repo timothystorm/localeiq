@@ -27,7 +27,7 @@ def load_routers(_app: FastAPI, package: str = "localeiq.routers"):
         for name, obj in inspect.getmembers(module):
             if isinstance(obj, APIRouter) and name == "router":
                 app.include_router(obj)
-                print(f"📝 Registered: {module_name}.router")
+                print(f"📝 Registered: {module_name}")
 
 
 @asynccontextmanager

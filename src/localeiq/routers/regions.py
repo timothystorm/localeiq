@@ -10,18 +10,21 @@ def get_region_service() -> RegionService:
     return RegionService()
 
 
-@router.get("/{country}/{postal}", response_model=Region)
+@router.get("/{country_code}/{ssh-add -lpostal_code}", response_model=Region)
 def get_region_by_country(
-    country: str = Path(
-        ..., min_length=2, max_length=2, description="ISO 3166-1 alpha-2 country code"
+    country_code: str = Path(
+        ...,
+        min_length=2,
+        max_length=2,
+        description="ISO 3166-1 alpha-2 country code - ex. US, CA, GB",
     ),
-    postal: str = Path(..., min_length=3, max_length=10),
+    postal_code: str = Path(..., min_length=3, max_length=10),
     service: RegionService = Depends(get_region_service),
 ):
     """
     Get region details by country and postal code.
     """
-    region = service.get_region_by_country_postal(country.lower(), postal)
+    region = service.get_region_by_country_postal(country_code.lower(), postal_code)
     if region is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Region not found."
@@ -29,9 +32,9 @@ def get_region_by_country(
     return region
 
 
-@router.get("/{postal}", response_model=Region)
+@router.get("/{postal_code}", response_model=Region)
 def get_region_by_postal_only(
-    postal: str = Path(..., min_length=3, max_length=10),
+    postal_code: str = Path(..., min_length=3, max_length=10),
     service: RegionService = Depends(get_region_service),
 ):
     """
@@ -39,7 +42,7 @@ def get_region_by_postal_only(
     Raises 409 Conflict if ambiguous and requires country specification.
     """
     print("hello")
-    result = service.get_region_by_postal(postal)
+    result = service.get_region_by_postal(postal_code)
 
     if result is None:
         raise HTTPException(
@@ -51,7 +54,7 @@ def get_region_by_postal_only(
             detail={
                 "message": "Postal code is ambiguous. Please specify a country.",
                 "suggest": [
-                    f"{router.prefix}/{r.location.country.code.lower()}/{postal}"
+                    f"{router.prefix}/{r.location.country.code.lower()}/{postal_code}"
                     for r in result
                 ],
             },
