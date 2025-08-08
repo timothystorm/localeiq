@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from localeiq.db.models import Country
+from localeiq.db.schema import Country
 
 load_dotenv()
 

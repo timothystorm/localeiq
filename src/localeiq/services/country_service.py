@@ -12,8 +12,14 @@ class CountryService:
     def __init__(self):
         self._repository = CountriesRepository()
 
-    def get_country_list(self) -> List[Country]:
+    def get_country_list(self, locale: str) -> List[Country]:
         """
         Returns a list of all countries.
         """
-        return self._repository.all()
+        parts = locale.replace("_", "-").split("-")
+        iso_locale = (
+            f"{parts[0].lower()}-{parts[1].upper()}"
+            if len(parts) > 1
+            else parts[0].lower()
+        )
+        return self._repository.all(iso_locale)

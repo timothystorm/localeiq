@@ -190,3 +190,24 @@ https://www.unicode.org/license.html
 
 If any modifications have been made to CLDR data, they are not endorsed by Unicode and may differ from the official CLDR
 distributions.
+
+## Endpoints
+
+- /countries - Fetches a list of countries
+  - (optional)
+```json
+{
+  "countries": [
+    {
+      "code": "US",
+      "name": "United States"
+    },
+    {
+      "code": "CA",
+      "name": "Canada"
+    }
+  ]
+}
+```
+- /countries/{country_code} - Fetches details for a specific country by code
+-

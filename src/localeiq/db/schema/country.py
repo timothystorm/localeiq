@@ -31,7 +31,11 @@ class Country(Base):
     sovereign = Column(Boolean, default=True)  # Is this a sovereign country?
     is_disputed = Column(Boolean, default=False)  # ex. Macau, Taiwan
 
-    "audit fields"
+    # relationships
+    meta = relationship("CountryMeta", back_populates="country", uselist=False)
+    localized_names = relationship("CountryLocalizedName", back_populates="country")
+
+    # audit fields
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
@@ -53,15 +57,16 @@ class CountryMeta(Base):
     languages = Column(ARRAY(Text))  # ISO 639-1 codes, e.g. ['en', 'fr', 'es']
     driving_side = Column(Text)  # 'left' or 'right'
 
-    "audit fields"
+    # relationships
+    country = relationship("Country", back_populates="meta")
+
+    # audit fields
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
     __table_args__ = (
         CheckConstraint("driving_side IN ('left', 'right')", name="check_driving_side"),
     )
-
-    country = relationship("country", back_populates="meta")
 
 
 class CountryLocalizedName(Base):
@@ -74,11 +79,11 @@ class CountryLocalizedName(Base):
     )  # e.g. 'es', 'es-MX', 'zh-Hant'
     localized_name = Column(Text, nullable=False)  # e.g. 'España', 'México', '中国'
 
-    "audit fields"
+    # audit fields
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
-    country = relationship("country", back_populates="localized_names")
+    country = relationship("Country", back_populates="localized_names")
 
     __table_args__ = (
         CheckConstraint(
