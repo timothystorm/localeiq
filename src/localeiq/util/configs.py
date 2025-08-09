@@ -9,6 +9,6 @@ env_path = BASE_DIR / ".env"
 
 load_dotenv(dotenv_path=env_path)
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("ASYNC_DATABASE_URL")
 if not DATABASE_URL:
-    raise RuntimeError(f"Missing DATABASE_URL in {env_path}")
+    raise RuntimeError(f"Missing 'ASYNC_DATABASE_URL' in {env_path}")

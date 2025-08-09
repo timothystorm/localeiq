@@ -1,17 +1,15 @@
 # setup postgres with PostGIS for geospatial data locally
-version: '3.9'
-
 services:
   db:
     image: postgres:latest
     container_name: localeiq-db
     restart: always
     environment:
-      POSTGRES_USER: localeiq
-      POSTGRES_PASSWORD: devpassword
-      POSTGRES_DB: localeiq
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
