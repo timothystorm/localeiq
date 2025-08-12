@@ -1,10 +1,9 @@
 from typing import List, Optional
 
-from sqlalchemy import select
+from sqlalchemy import select, case
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from localeiq.db.schema import Country as CountrySchema
-from localeiq.db.schema.country import CountryLocalizedName
+from localeiq.db.schema import CountrySchema, CountryLocalizedNameSchema
 from localeiq.models.country import Country as CountryModel
 
 
@@ -39,15 +38,31 @@ class CountriesRepository:
 
         # Split the language code to handle both full and base language codes
         # e.g., 'en-US' will be split into 'en-US' and 'en'
-        language_list = {language_code, language_code.split("-")[0].lower()}
-        stmt = select(CountrySchema, CountryLocalizedName.localized_name).join(
-            CountryLocalizedName,
-            (CountryLocalizedName.country_id == CountrySchema.id)
-            & (CountryLocalizedName.language_code.in_(language_list)),
+        language_base = language_code.split("-")[0].lower()
+        candidates = {language_code, language_base}
+
+        # Create a case expression to rank the localized names
+        # preferring the full language code first, then the base language code
+        rank_expr = case(
+            (CountryLocalizedNameSchema.language_code == language_code, 1),
+            (CountryLocalizedNameSchema.language_code == language_base, 1),
+            else_=99,
+        )
+
+        stmt = (
+            select(CountrySchema, CountryLocalizedNameSchema.localized_name)
+            .join(
+                CountryLocalizedNameSchema,
+                CountryLocalizedNameSchema.country_id == CountrySchema.id,
+            )
+            .where(CountryLocalizedNameSchema.language_code.in_(candidates))
+            .distinct(CountrySchema.id)
+            # order_by is critical to pick the best localized name based on the rank
+            .order_by(CountrySchema.id, rank_expr)
         )
 
         results = await self._session.execute(stmt)
-        rows = results.all()
         return [
-            _to_country_model(country, localized_name=name) for country, name in rows
+            _to_country_model(country, localized_name=name)
+            for country, name in results.all()
         ]

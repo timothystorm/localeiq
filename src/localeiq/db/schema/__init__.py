@@ -1,3 +1,3 @@
-from .country import Country
+from .country_schema import CountrySchema, CountryMetaSchema, CountryLocalizedNameSchema
 
-__all__ = ["Country"]
+__all__ = ["CountrySchema", "CountryMetaSchema", "CountryLocalizedNameSchema"]

@@ -15,7 +15,7 @@ from sqlalchemy.orm import relationship
 from localeiq.db.base import Base
 
 
-class Country(Base):
+class CountrySchema(Base):
     __tablename__ = "country"
 
     id = Column(Integer, primary_key=True)
@@ -32,15 +32,17 @@ class Country(Base):
     is_disputed = Column(Boolean, default=False)  # ex. Macau, Taiwan
 
     # relationships
-    meta = relationship("CountryMeta", back_populates="country", uselist=False)
-    localized_names = relationship("CountryLocalizedName", back_populates="country")
+    meta = relationship("CountryMetaSchema", back_populates="country", uselist=False)
+    localized_names = relationship(
+        "CountryLocalizedNameSchema", back_populates="country"
+    )
 
     # audit fields
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
 
-class CountryMeta(Base):
+class CountryMetaSchema(Base):
     __tablename__ = "country_meta"
 
     id = Column(Integer, primary_key=True)
@@ -58,7 +60,7 @@ class CountryMeta(Base):
     driving_side = Column(Text)  # 'left' or 'right'
 
     # relationships
-    country = relationship("Country", back_populates="meta")
+    country = relationship("CountrySchema", back_populates="meta")
 
     # audit fields
     created_at = Column(TIMESTAMP, server_default=func.now())
@@ -69,7 +71,7 @@ class CountryMeta(Base):
     )
 
 
-class CountryLocalizedName(Base):
+class CountryLocalizedNameSchema(Base):
     __tablename__ = "country_localized_name"
 
     id = Column(Integer, primary_key=True)
@@ -83,7 +85,7 @@ class CountryLocalizedName(Base):
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
-    country = relationship("Country", back_populates="localized_names")
+    country = relationship("CountrySchema", back_populates="localized_names")
 
     __table_args__ = (
         CheckConstraint(

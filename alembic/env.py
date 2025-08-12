@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from localeiq.db.schema import Country
+from localeiq.db.schema import CountrySchema
 
 load_dotenv()
 
@@ -26,7 +26,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = None
-target_metadata = Country.metadata
+target_metadata = CountrySchema.metadata
 
 
 # other values from the util, defined by the needs of env.py,

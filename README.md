@@ -147,7 +147,7 @@ class Country(BaseModel):
 
 ```python
 from fastapi import FastAPI
-from localeiq.routers import countries, root
+from localeiq.routers import countries_router, root
 
 app = FastAPI()
 app.include_router(root.router)
