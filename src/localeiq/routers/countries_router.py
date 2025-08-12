@@ -1,4 +1,4 @@
-from typing import List, Optional, Dict
+from typing import List, Optional
 
 from fastapi import APIRouter
 from fastapi.params import Header
@@ -23,15 +23,3 @@ async def get_country_list(
     """
     async with get_country_service() as service:
         return await service.get_country_list(language_code=x_locale)
-
-
-@router.get("/countries/count")
-async def get_countries_count() -> Dict[str, int]:
-    """
-    Returns the total number of countries available.
-    This endpoint does not require any parameters.
-    :return: A CountryCountResponse containing the count of countries.
-    """
-    async with get_country_service() as service:
-        country_list = await service.get_country_list()
-        return {"count": len(country_list)}

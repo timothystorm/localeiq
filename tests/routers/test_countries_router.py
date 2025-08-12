@@ -56,18 +56,3 @@ def test_get_country_list_locales(app, mock_country_service, locale, expected_lo
         mock_country_service.get_country_list.assert_awaited_with(
             language_code=expected_locale
         )
-
-
-def test_get_countries_count(app, mock_country_service):
-    with patch(
-        "localeiq.routers.countries_router.get_country_service",
-        return_value=mock_country_service,
-    ):
-        client = TestClient(app)
-
-        response = client.get("/countries/count")
-
-        assert response.status_code == 200
-        data = response.json()
-        assert data == {"count": 3}
-        mock_country_service.get_country_list.assert_awaited_with()
