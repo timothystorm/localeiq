@@ -8,7 +8,7 @@ from sqlalchemy import pool
 
 from localeiq.db.schema import CountrySchema
 
-load_dotenv()
+load_dotenv(override=True)
 
 config = context.config
 config.set_main_option("sqlalchemy.url", os.getenv("SYNC_DATABASE_URL"))

@@ -39,7 +39,7 @@ async def lifespan(_app: FastAPI):
 
 
 """
-Main entry point for the LocaleIQ API.
+Main entry point for LocaleIQ API.
 """
 app = FastAPI(
     title="LocaleIQ API",

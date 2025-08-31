@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parents[3]
 env_path = BASE_DIR / ".env"
 
-load_dotenv(dotenv_path=env_path)
+load_dotenv(dotenv_path=env_path, override=True)
 
 DATABASE_URL = os.getenv("ASYNC_DATABASE_URL")
 if not DATABASE_URL:
