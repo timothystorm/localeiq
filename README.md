@@ -55,7 +55,7 @@ Only needs to be done once per machine:
 ```bash
   poetry run start
 ```
-
+---
 ### 🐳 Start with Docker
 
 #### 📦 Build image
