@@ -56,7 +56,27 @@ Only needs to be done once per machine:
   poetry run start
 ```
 
+### 🐳 Start with Docker
+
+#### 📦 Build image
+```bash
+  docker build -t localeiq:latest .
+````
+
+#### 🏃‍♂️ Run container
+```bash
+  docker run --rm -p 8000:8000 --name localeiq_api localeiq:latest
+```
+
+#### 🛑 Stop container
+```bash
+  docker stop localeiq_api
+```
+
 #### Endpoints
 
 - `GET /docs` - Get API docs
 - `GET /countries` - Get list of countries
+   ```bash
+   curl http://localhost:8000/countries
+   ```
