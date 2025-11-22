@@ -30,7 +30,7 @@ setup: install install-modules
 
 # Run tests for all modules (root pytest.ini controls testpaths)
 test:
-	poetry run pytest
+	poetry run pytest -n auto
 
 # Run tests for a specific module: make test MODULE=data
 test-module:
