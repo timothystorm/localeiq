@@ -21,12 +21,14 @@ dev = [
     "pytest (>=9.0.1,<10.0.0)",
     "black (>=25.11.0,<26.0.0)",
     "isort (>=7.0.0,<8.0.0)",
-    "mypy (>=1.18.2,<2.0.0)"
+    "mypy (>=1.18.2,<2.0.0)",
+    "pre-commit (>=4.4.0,<5.0.0)"
 ]
 
 [tool.black]
 line-length = 88
-target-version = ['py314']
+# update to 3.14 when black supports it
+target-version = ['py313']
 extend-exclude = """
 (
     alembic

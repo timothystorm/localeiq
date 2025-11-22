@@ -1,0 +1,42 @@
+repos:
+  # Black formatter
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        exclude: >
+          (?x)(
+            alembic/|
+            migrations/|
+            .*/alembic/.*
+          )
+
+  # isort: import sorting
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        exclude: >
+          (?x)(
+            alembic/|
+            migrations/|
+            .*/alembic/.*
+          )
+
+  # Optional: Ruff (faster than flake8)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.8
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+        exclude: "(alembic|migrations)"
+
+  # Optional: Mypy type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - "types-python-dateutil"
+          - "types-requests"
+        exclude: "(alembic|migrations)"
