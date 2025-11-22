@@ -24,5 +24,23 @@ dev = [
     "mypy (>=1.18.2,<2.0.0)"
 ]
 
+[tool.black]
+line-length = 88
+target-version = ['py314']
+extend-exclude = """
+(
+    alembic
+  | migrations
+  | .*\\/alembic\\/.*
+)
+"""
+
+[tool.isort]
+profile = "black"
+skip = [
+    ".*/alembic/.*",
+    "migrations"
+]
+
 [tool.mypy]
 exclude = "(.*/tests/.*)"
