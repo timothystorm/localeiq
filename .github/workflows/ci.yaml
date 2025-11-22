@@ -55,7 +55,7 @@ jobs:
 
     strategy:
       matrix:
-        module: [shared, data, datetime, language, culture, geopolitical, economic]
+        module: [shared, data, date_time, language, culture, geopolitical, economic]
       fail-fast: false   # allow all modules to run even if one fails
 
     env:

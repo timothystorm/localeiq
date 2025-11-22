@@ -3,7 +3,7 @@
 # ===========================================
 
 # List of all module directories (update as needed)
-MODULES = shared data time language culture geopolitical economic
+MODULES = shared data date_time language culture geopolitical economic
 
 # -------------------------------------------
 # Environment
@@ -28,9 +28,19 @@ setup: install install-modules
 # Testing
 # -------------------------------------------
 
-# Run tests for all modules (root pytest.ini controls testpaths)
+# Run tests for all modules serial (root pytest.ini controls testpaths)
 test:
 	poetry run pytest -n auto
+
+# Run tests for all modules in parallel (manual per-module invocation)
+test-all:
+	@echo "Running tests in parallel per module..."
+	@for m in $(MODULES); do \
+		echo "[TEST] $$m"; \
+		poetry run pytest $$m/tests & \
+	done; \
+	wait
+	@echo "Done."
 
 # Run tests for a specific module: make test MODULE=data
 test-module:
