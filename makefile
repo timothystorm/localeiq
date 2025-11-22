@@ -63,6 +63,9 @@ lint:
 	poetry run isort --check .
 	poetry run mypy .
 
+type-check:
+	poetry run mypy .
+
 # -------------------------------------------
 # Utility
 # -------------------------------------------
@@ -97,9 +100,11 @@ help:
 	@echo "  install           Install root dependencies"
 	@echo "  install-modules   Install dependencies for all modules"
 	@echo "  test              Run full monorepo tests"
+	@echo "  test-all          Run tests in all modules in parallel"
 	@echo "  test-module       Run tests in one module (MODULE=name)"
 	@echo "  format            Black + isort formatting"
 	@echo "  lint              Black + isort + mypy checks"
+	@echo "  type-check        Run mypy type checks"
 	@echo "  clean             Remove venvs + caches"
 	@echo "  clean-venv        Remove poetry virtualenvs"
 	@echo "  clean-pycache     Remove __pycache__ folders"
