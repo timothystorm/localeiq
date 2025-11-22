@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies (make setup)
         run: make setup
 
-      # 💩 Ensure consistency with pre-commit hooks - did you try to push w/linting errors?
+      # 💩 Ensure consistency with pre-commit hooks - did you try to push w/o linting?
       - name: Run pre-commit checks
         uses: pre-commit/action@v3.0.1
 

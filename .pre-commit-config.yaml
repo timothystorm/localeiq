@@ -8,7 +8,8 @@ repos:
           (?x)(
             alembic/|
             migrations/|
-            .*/alembic/.*
+            .*/alembic/.*|
+            .*/.venv/.*  
           )
 
   # isort: import sorting
@@ -20,7 +21,8 @@ repos:
           (?x)(
             alembic/|
             migrations/|
-            .*/alembic/.*
+            .*/alembic/.*|
+            .*/.venv/.*  
           )
 
   # Optional: Ruff (faster than flake8)
