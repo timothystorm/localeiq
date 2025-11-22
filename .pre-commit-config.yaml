@@ -8,8 +8,7 @@ repos:
           (?x)(
             alembic/|
             migrations/|
-            .*/alembic/.*|
-            .*/.venv/.*  
+            .*/alembic/.*
           )
 
   # isort: import sorting
@@ -19,10 +18,10 @@ repos:
       - id: isort
         exclude: >
           (?x)(
+            ^\.venv/|
             alembic/|
             migrations/|
-            .*/alembic/.*|
-            .*/.venv/.*  
+            .*/alembic/.* 
           )
 
   # Optional: Ruff (faster than flake8)

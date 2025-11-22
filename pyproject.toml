@@ -39,9 +39,11 @@ extend-exclude = """
 
 [tool.isort]
 profile = "black"
+skip_glob = ["*/.venv/*"]
 skip = [
     ".*/alembic/.*",
-    "migrations"
+    "migrations",
+    ".venv"
 ]
 
 [tool.mypy]
