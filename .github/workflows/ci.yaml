@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-lint:
+  build:
     runs-on: ubuntu-latest
 
     env:
@@ -44,8 +44,8 @@ jobs:
         run: make lint
 
 
-  tests:
-    needs: build-and-lint
+  test:
+    needs: build
     runs-on: ubuntu-latest
 
     strategy:
