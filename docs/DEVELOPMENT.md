@@ -204,6 +204,11 @@ make type-check
 ❌ virtualenv not cached in CI
 → Ensure virtualenvs.in-project = true and never delete .venv in Make.
 
+❌need to test pre-commit hooks locally without actually committing?
+```bash
+poetry run pre-commit run --all-files
+```
+
 ---
 
 ### 15. Before Submitting Code

@@ -1,5 +1,4 @@
 from pydantic import ValidationError
-
 from shared.configuration import Configuration
 
 

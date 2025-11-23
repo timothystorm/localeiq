@@ -62,6 +62,7 @@ format:
 
 lint:
 	poetry run ruff check .
+	poetry run ruff format --check .
 	poetry run mypy .
 
 lint-file:
