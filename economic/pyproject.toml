@@ -14,7 +14,7 @@ dependencies = [
 packages = [{include = "economic", from = "src"}]
 
 [tool.poetry.dependencies]
-localeiq-shared = { path = "../shared", develop = true }
+shared = { path = "../shared", develop = true }
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

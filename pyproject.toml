@@ -9,43 +9,46 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = []
 
-[tool.poetry]
-package-mode = false
-
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [dependency-groups]
 dev = [
-    "black (>=25.11.0,<26.0.0)",
-    "isort (>=7.0.0,<8.0.0)",
     "mypy (>=1.18.2,<2.0.0)",
-    "pre-commit (>=4.4.0,<5.0.0)",
+    "pre-commit (>=4.5.0,<5.0.0)",
     "pytest (>=9.0.1,<10.0.0)",
-    "pytest-xdist (>=3.8.0,<4.0.0)"
+    "pytest-xdist (>=3.8.0,<4.0.0)",
+    "ruff (>=0.14.6,<0.15.0)"
 ]
 
-[tool.black]
-line-length = 88
-# update to 3.14 when black supports it
-target-version = ['py313']
-extend-exclude = """
-(
-    alembic
-  | migrations
-  | .*\\/alembic\\/.*
-)
-"""
+[tool.poetry.dependencies]
+shared = { path = "shared", develop = true }
+data = { path = "data", develop = true }
+date_time = { path = "date_time", develop = true }
+language = { path = "language", develop = true }
+culture = { path = "culture", develop = true }
+geopolitical = { path = "geopolitical", develop = true }
+economic = { path = "economic", develop = true }
 
-[tool.isort]
-profile = "black"
-skip_glob = ["*/.venv/*"]
-skip = [
-    ".*/alembic/.*",
-    "migrations",
-    ".venv"
+[tool.poetry]
+package-mode = false
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+extend-exclude = [
+    ".venv",
+    "alembic",
 ]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]   # Includes isort (I), pyflakes, pycodestyle
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
 
 [tool.mypy]
 exclude = [

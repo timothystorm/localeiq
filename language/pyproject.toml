@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [tool.poetry.dependencies]
-localeiq-shared = { path = "../shared", develop = true }
+shared = { path = "../shared", develop = true }
 
 [tool.poetry]
 packages = [{include = "language", from = "src"}]

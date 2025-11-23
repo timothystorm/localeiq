@@ -9,7 +9,7 @@ MODULES = shared data date_time language culture geopolitical economic
 # Environment
 # -------------------------------------------
 
-# Install root dev environment (pytest, black, etc.)
+# Install root dev environment (pytest, ruff, etc.)
 install:
 	poetry install
 
@@ -54,17 +54,25 @@ test-module:
 # Linting & Formatting
 # -------------------------------------------
 
-format:
-	poetry run black .
-	poetry run isort .
-
-lint:
-	poetry run black --check .
-	poetry run isort --check .
-	poetry run mypy .
-
 type-check:
 	poetry run mypy .
+
+format:
+	poetry run ruff format .
+
+lint:
+	poetry run ruff check .
+	poetry run mypy .
+
+lint-file:
+	@if [ -z "$(FILE)" ]; then \
+		echo "Usage: make lint-file FILE=shared/config/configuration.py"; \
+	else \
+		poetry run ruff check $(FILE); \
+	fi
+
+lint-fix:
+	poetry run ruff check --fix .
 
 # -------------------------------------------
 # Utility
@@ -102,9 +110,11 @@ help:
 	@echo "  test              Run full monorepo tests"
 	@echo "  test-all          Run tests in all modules in parallel"
 	@echo "  test-module       Run tests in one module (MODULE=name)"
-	@echo "  format            Black + isort formatting"
-	@echo "  lint              Black + isort + mypy checks"
+	@echo "  format            Ruff formatting"
+	@echo "  lint              Ruff + mypy checks"
 	@echo "  type-check        Run mypy type checks"
+	@echo "  lint-file         Lint a specific file (FILE=path/to/file)"
+	@echo "  lint-fix          Fix linting issues automatically"
 	@echo "  clean             Remove venvs + caches"
 	@echo "  clean-venv        Remove poetry virtualenvs"
 	@echo "  clean-pycache     Remove __pycache__ folders"

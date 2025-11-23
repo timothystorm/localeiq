@@ -72,7 +72,7 @@ source .venv/bin/activate
 localeiq/
   shared/        ← reusable cross-domain utilities
   data/          ← ingestion, parsing, enrichment
-  datetime/
+  date_time/
   language/
   culture/
   geopolitical/

@@ -61,7 +61,7 @@
   - region  
   - country  
   - currency  
-  - datetime  
+  - date_time  
 - Shared domain models or interfaces  
 - Prevents semantic drift across modules  
 
