@@ -93,7 +93,7 @@ prepare:
 	wait
 
 # setup a new environment or re-initialize an existing environment
-setup: clean prepare install
+setup: clean install prepare
 
 # -------------------------------------------
 # Help
