@@ -59,21 +59,27 @@ clean-cache:
 		find $(ROOT_DIR)/$$module -type d -name "__pycache__" -exec rm -rf {} +; \
 		find $(ROOT_DIR)/$$module -type d -name ".pytest_cache" -exec rm -rf {} +; \
 	done
+	wait
 
 clean-venv:
 	@echo "Cleaning virtual environments"
 	@for module in $(MODULES); do \
 		cd $(ROOT_DIR)/$$module && poetry env remove --all || true; \
 	done
+	wait
 
 clean: clean-venv clean-cache
 	@echo "Cleaned environments and caches."
 
 # lock and install module dependencies
 install:
+	poetry lock || exit 1 && poetry install || exit 1; \
+    wait
+
 	@for module in $(MODULES); do \
 		cd $(ROOT_DIR)/$$module && poetry lock || exit 1 && poetry install || exit 1; \
 	done
+	wait
 
 # list all modules of the monorepo
 list:
