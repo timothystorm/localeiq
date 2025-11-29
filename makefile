@@ -81,6 +81,13 @@ list:
 		echo " - $$module"; \
 	done
 
+# install git pre-commit hooks
+prepare:
+	poetry run pre-commit install
+
+# setup a new environment or re-initialize an existing environment
+setup: clean prepare install
+
 # -------------------------------------------
 # Help
 # -------------------------------------------
