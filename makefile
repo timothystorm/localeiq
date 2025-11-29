@@ -84,6 +84,7 @@ list:
 # install git pre-commit hooks
 prepare:
 	poetry run pre-commit install
+	wait
 
 # setup a new environment or re-initialize an existing environment
 setup: clean prepare install
