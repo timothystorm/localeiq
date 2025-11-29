@@ -11,15 +11,15 @@ class TimeResponse(BaseModel):
     """
     Response model for current time information.
     """
+
     iso_8601: str
     dst: bool
     timestamp: float
 
 
 class TimeService:
-    """
+    """ """
 
-    """
     @staticmethod
     def now(tz_name: str) -> TimeResponse:
         """
@@ -50,4 +50,7 @@ class TimeService:
 
         matches = difflib.get_close_matches(tz, available_timezones(), n=1, cutoff=0.6)
         raise InvalidTimezone(
-            f"Invalid timezone, did you mean '{matches[0]}'" if matches else f"Invalid timezone")
+            f"Invalid timezone, did you mean '{matches[0]}'"
+            if matches
+            else "Invalid timezone"
+        )

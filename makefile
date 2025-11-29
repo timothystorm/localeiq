@@ -7,35 +7,8 @@ MODULES = apps/date_time packages/utils
 ROOT_DIR := $(shell pwd)
 
 # -------------------------------------------
-# Testing
-# -------------------------------------------
-# Run tests for all modules async
-test:
-	@poetry run pytest -n auto --no-header
-
-# Run tests for all modules synchronously
-test-sync:
-	@for m in $(MODULES); do \
-        poetry run pytest --no-header $$m/tests & \
-        wait; \
-    done
-
-# Run tests for a specific module: make test MODULE=apps/date_time
-test-module:
-	@if [ -z "$(MODULE)" ]; then \
-        echo "Usage: make test-module MODULE=data"; \
-    else \
-        poetry run pytest --no-header ./$(MODULE); \
-    fi
-# -------------------------------------------
 # Linting & Formatting
 # -------------------------------------------
-type-check:
-	@for m in $(MODULES); do \
-		poetry run mypy ./$$m || exit 1; \
-		wait; \
-    done
-
 lint-fix:
 	@for m in $(MODULES); do \
 		poetry run ruff check --fix ./$$m || exit 1; \

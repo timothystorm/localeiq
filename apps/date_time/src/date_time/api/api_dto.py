@@ -13,6 +13,7 @@ class Meta(BaseModel):
     - input_params: Optional dictionary of input parameters used in the request.
     - warnings: Optional list of warning messages.
     """
+
     input_params: Optional[Dict[str, Any]]
     warnings: Optional[List[str]] = None
 
@@ -23,5 +24,6 @@ class StandardResponse(BaseModel, Generic[T]):
     - meta: Metadata about the response.
     - data: The actual response data of generic type T.
     """
+
     meta: Meta
     data: T
