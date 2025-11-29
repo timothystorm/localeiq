@@ -57,9 +57,7 @@ class TestWithEnvFile:
         # ---- create a temporary .env file ----
         env_file = tmp_path / ".env"
         env_file.write_text(
-            "DEFAULT_TIMEZONE=Mars/Olympus_Mons\n"
-            "PORT=9001\n"
-            "non_existent=setting\n"
+            "DEFAULT_TIMEZONE=Mars/Olympus_Mons\nPORT=9001\nnon_existent=setting\n"
         )
 
         # ---- point Pydantic's env_file path to our temp file ----
@@ -96,5 +94,5 @@ class TestWithEnvFile:
 
         # ---- Assertions ----
         assert cfg.host == "0.0.0.0"  # default
-        assert cfg.port == 5432 # env var wins
+        assert cfg.port == 5432  # env var wins
         assert cfg.default_timezone == "Mars/Olympus_Mons"  # from .env

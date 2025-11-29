@@ -9,6 +9,7 @@ class EnvironmentEnum(str, Enum):
     """
     Application environment enum.
     """
+
     dev = "dev"
     staging = "staging"
     production = "production"
@@ -16,10 +17,10 @@ class EnvironmentEnum(str, Enum):
 
 class Configuration(BaseSettings):
     """
-        Application configuration loaded in order (overwriting) from: defaults, .env file, environment variables.
+    Application configuration loaded in order (overwriting) from: defaults, .env file, environment variables.
 
-        Use `get_localeiq_config()` for app-wide configuration. Direct instantiation is supported for testing and tooling.
-        """
+    Use `get_localeiq_config()` for app-wide configuration. Direct instantiation is supported for testing and tooling.
+    """
 
     # ---- meta ---
     environment: EnvironmentEnum = Field(default=EnvironmentEnum.dev)
@@ -36,7 +37,9 @@ class Configuration(BaseSettings):
     # log_level: str = "INFO"
 
     # ---- Time ----
-    default_timezone: str = Field(default="UTC", description="Default IANA timezone to use")
+    default_timezone: str = Field(
+        default="UTC", description="Default IANA timezone to use"
+    )
 
     # ---- Loads .env ---
     model_config = SettingsConfigDict(
@@ -47,7 +50,10 @@ class Configuration(BaseSettings):
     )
 
     def is_production(self) -> bool:
-        return self.environment != EnvironmentEnum.dev and self.environment != EnvironmentEnum.staging
+        return (
+            self.environment != EnvironmentEnum.dev
+            and self.environment != EnvironmentEnum.staging
+        )
 
 
 @lru_cache

@@ -1,19 +1,42 @@
+#========================================================================================
+# ROOT-LEVEL pyproject.toml (NOTE FOR DEVELOPERS)
+#
+# This file exists ONLY because PyCharm requires a pyproject.toml at the repo root
+# in order to resolve imports, indexing, refactoring, and test discovery.
+#
+# IMPORTANT:
+#   • DO NOT add runtime dependencies here.
+#   • DO NOT treat this as a real Python package.
+#   • DO NOT run `poetry add` at the root.
+#
+# SUBMODULES:
+#   Every actual package lives in its own directory with its own pyproject.toml.
+#   Use those to manage real dependencies.
+#
+# PYCHARM QUIRKS:
+#   PyCharm may automatically add submodule dependencies to this file.
+#   This is expected and harmless. Ignore those entries.
+#
+# WORKFLOW:
+#   • Run all dev tasks (test, lint, build) *inside each submodule*.
+#   • The root pyproject.toml is ONLY for editor integration and shared dev tools.
+#
+#========================================================================================
 [project]
 name = "localeiq"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Timothy Storm",email = "timothystorm@gmail.com"}
+    { name = "Timothy Storm", email = "timothystorm@gmail.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "pytest (>=9.0.1)",
-    "pydantic-settings (>=2.12.0)",
+    "pydantic (>=2.12.5)",
     "fastapi (>=0.122.0)",
     "uvicorn (>=0.38.0)",
     "pendulum (>=3.1.0)",
-    "pydantic (>=2.12.5)"
+    "pydantic-settings (>=2.12.0)"
 ]
 
 [tool.poetry]
@@ -23,3 +46,10 @@ package-mode = false
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[dependency-groups]
+dev = [
+    "httpx (>=0.28.1)",
+    "pytest (>=9.0.1)",
+    "mypy (>=1.18.2,<2.0.0)",
+    "ruff (>=0.14.6,<0.15.0)"
+]
