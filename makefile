@@ -69,10 +69,10 @@ clean-venv:
 clean: clean-venv clean-cache
 	@echo "Cleaned environments and caches."
 
-# install module dependencies
+# lock and install module dependencies
 install:
 	@for module in $(MODULES); do \
-		cd $(ROOT_DIR)/$$module && poetry install || exit 1; \
+		cd $(ROOT_DIR)/$$module && poetry lock || exit 1 && poetry install || exit 1; \
 	done
 
 # list all modules of the monorepo
