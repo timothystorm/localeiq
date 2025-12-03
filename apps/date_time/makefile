@@ -6,7 +6,11 @@ MODULE = "date_time"
 # -------------------------------------------
 test:
 	@echo "\033[0;34m[$(MODULE)] Running tests (pytest)...\033[0m"
-	@poetry run pytest -n auto --no-header
+	@poetry run pytest -v --tb=short --no-header
+
+test-async:
+	@echo "\033[0;34m[$(MODULE)] Running async tests (pytest-asyncio)...\033[0m"
+	@poetry run pytest -v --tb=short --no-header -n auto
 
 # -------------------------------------------
 # Linting & Formatting
@@ -31,7 +35,9 @@ lint: type-check lint-fix format
 clean-cache:
 	@echo "\033[0;34m[$(MODULE)] Cleaning cache...\033[0m"
 	@find $(ROOT_DIR) -type d -name "__pycache__" -exec rm -rf {} +
+	@find $(ROOT_DIR) -type d -name ".mypy_cache" -exec rm -rf {} +
 	@find $(ROOT_DIR) -type d -name ".pytest_cache" -exec rm -rf {} +
+	@find $(ROOT_DIR) -type d -name ".ruff_cache" -exec rm -rf {} +
 
 clean-venv:
 	@echo "\033[0;34m[$(MODULE)] Cleaning virtual environment(s)...\033[0m"
@@ -59,9 +65,10 @@ help:
 	@echo "  clean-cache Clean pycache and pytest caches"
 	@echo "  clean-venv  Clean venv environments"
 	@echo "  format      Format code"
-	@echo "  help        Show this help message"
 	@echo "  install     Install [$(MODULE)] dependencies"
 	@echo "  lint        Run all linting tasks (type-check, lint-fix, format)"
 	@echo "  lint-fix    Run linting and auto-fix issues"
-	@echo "  test        Run tests"
+	@echo "  test        Run tests synchronously"
+	@echo "  test-async  Run tests asynchronously"
 	@echo "  type-check  Run type checking"
+	@echo "  help        Show this help message"

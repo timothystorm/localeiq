@@ -4,53 +4,59 @@ from zoneinfo import available_timezones
 
 import pendulum
 from pendulum.tz.exceptions import InvalidTimezone
-from pydantic import BaseModel
+
+from date_time.service.clock import Clock, RealClock
 
 
-class TimeResponse(BaseModel):
+def list_timezones() -> List[str]:
     """
-    Response model for current time information.
+    Lists all available IANA timezones.
     """
+    return list(available_timezones())
 
-    iso_8601: str
-    dst: bool
-    timestamp: float
+
+def to_valid_timezone(tz: str | None) -> str | None:
+    """
+    Converts the given timezone string into a valid  IANA timezones.
+    If the timezone is invalid an InvalidTimezone exception is raised with a suggestion if possible.
+
+    examples of valid timezones: "America/Denver", "UTC", "Europe/Berlin".
+
+    :param tz: Timezone string to convert
+    :return: Valid timezone string or raises ValueError
+    """
+    if tz == "" or tz is None:
+        return "UTC"
+    elif tz in available_timezones():
+        return tz
+
+    # Suggest the closest matching timezone
+    matches = difflib.get_close_matches(tz, available_timezones(), n=1, cutoff=0.6)
+    raise InvalidTimezone(
+        f"Invalid timezone, did you mean '{matches[0]}'"
+        if matches
+        else "Invalid timezone"
+    )
 
 
 class TimeService:
-    """ """
+    """
+    Service for handling time-related operations.
+    """
 
-    @staticmethod
-    def now(tz_name: str) -> TimeResponse:
+    def __init__(self, clock: Clock = RealClock()):
+        """
+        :param clock: Clock implementation to use for getting the current time. Defaults to RealClock.
+        """
+        self._clock = clock
+
+    def now(self, tz: str) -> pendulum.DateTime:
         """
         :return: current time information for the given timezone.
         """
-        now = pendulum.now(tz=tz_name)
-        return TimeResponse(
-            dst=now.is_dst(),
-            iso_8601=now.to_iso8601_string(),
-            timestamp=now.timestamp() * 1000,  # milliseconds
-        )
-
-    @staticmethod
-    def list_timezones() -> List[str]:
-        return list(available_timezones())
-
-    @staticmethod
-    def validate_timezone(tz: str | None) -> str | None:
-        """
-        Validates the given timezone string against available IANA timezones.
-        If the timezone is invalid an IInvalidTimezone exception is raised with a suggestion if possible.
-
-        :param tz: Timezone string to validate
-        :return: Valid timezone string or raises ValueError
-        """
-        if tz == "" or tz is None or tz in available_timezones():
-            return tz
-
-        matches = difflib.get_close_matches(tz, available_timezones(), n=1, cutoff=0.6)
-        raise InvalidTimezone(
-            f"Invalid timezone, did you mean '{matches[0]}'"
-            if matches
-            else "Invalid timezone"
-        )
+        try:
+            return self._clock.now(tz)
+        except InvalidTimezone as e:
+            raise InvalidTimezone(
+                f"Invalid timezone: {tz}, try using `to_valid_timezone()`"
+            ) from e

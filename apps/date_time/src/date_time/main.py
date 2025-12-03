@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from date_time.api.middleware.timer_middleware import TimerMiddleware
 from date_time.api.middleware.tracer_middleware import TracerMiddleware
 from date_time.api.router.time_router import router as time_router
-from date_time.api.router.timezone_router import router as timezone_router
 
 
 def create_app() -> FastAPI:
@@ -12,7 +11,6 @@ def create_app() -> FastAPI:
 
     # Include routers
     date_time_app.include_router(time_router)
-    date_time_app.include_router(timezone_router)
 
     # Add middleware
     date_time_app.add_middleware(TracerMiddleware)

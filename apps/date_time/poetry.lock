@@ -84,15 +84,30 @@ files = [
 markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win32\""}
 
 [[package]]
+name = "execnet"
+version = "2.1.2"
+description = "execnet: rapid multi-Python deployment"
+optional = false
+python-versions = ">=3.8"
+groups = ["dev"]
+files = [
+    {file = "execnet-2.1.2-py3-none-any.whl", hash = "sha256:67fba928dd5a544b783f6056f449e5e3931a5c378b128bc18501f7ea79e296ec"},
+    {file = "execnet-2.1.2.tar.gz", hash = "sha256:63d83bfdd9a23e35b9c6a3261412324f964c2ec8dcd8d3c6916ee9373e0befcd"},
+]
+
+[package.extras]
+testing = ["hatch", "pre-commit", "pytest", "tox"]
+
+[[package]]
 name = "fastapi"
-version = "0.122.0"
+version = "0.123.5"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "fastapi-0.122.0-py3-none-any.whl", hash = "sha256:a456e8915dfc6c8914a50d9651133bd47ec96d331c5b44600baa635538a30d67"},
-    {file = "fastapi-0.122.0.tar.gz", hash = "sha256:cd9b5352031f93773228af8b4c443eedc2ac2aa74b27780387b853c3726fb94b"},
+    {file = "fastapi-0.123.5-py3-none-any.whl", hash = "sha256:a9c708e47c0fa424139cddb8601d0f92d3111b77843c22e9c8d0164d65fe3c97"},
+    {file = "fastapi-0.123.5.tar.gz", hash = "sha256:54bbb660ca231d3985474498b51c621ddcf8888d9a4c1ecb10aa40ec217e4965"},
 ]
 
 [package.dependencies]
@@ -690,6 +705,27 @@ pygments = ">=2.7.2"
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "requests", "setuptools", "xmlschema"]
 
 [[package]]
+name = "pytest-xdist"
+version = "3.8.0"
+description = "pytest xdist plugin for distributed testing, most importantly across multiple CPUs"
+optional = false
+python-versions = ">=3.9"
+groups = ["dev"]
+files = [
+    {file = "pytest_xdist-3.8.0-py3-none-any.whl", hash = "sha256:202ca578cfeb7370784a8c33d6d05bc6e13b4f25b5053c30a152269fd10f0b88"},
+    {file = "pytest_xdist-3.8.0.tar.gz", hash = "sha256:7e578125ec9bc6050861aa93f2d59f1d8d085595d6551c2c90b6f4fad8d3a9f1"},
+]
+
+[package.dependencies]
+execnet = ">=2.1"
+pytest = ">=7.0.0"
+
+[package.extras]
+psutil = ["psutil (>=3.0)"]
+setproctitle = ["setproctitle"]
+testing = ["filelock"]
+
+[[package]]
 name = "python-dateutil"
 version = "2.9.0.post0"
 description = "Extensions to the standard Python datetime module"
@@ -725,7 +761,7 @@ version = "0.14.7"
 description = "An extremely fast Python linter and code formatter, written in Rust."
 optional = false
 python-versions = ">=3.7"
-groups = ["main"]
+groups = ["dev"]
 files = [
     {file = "ruff-0.14.7-py3-none-linux_armv6l.whl", hash = "sha256:b9d5cb5a176c7236892ad7224bc1e63902e4842c460a0b5210701b13e3de4fca"},
     {file = "ruff-0.14.7-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:3f64fe375aefaf36ca7d7250292141e39b4cea8250427482ae779a2aa5d90015"},
@@ -869,4 +905,4 @@ standard = ["colorama (>=0.4) ; sys_platform == \"win32\"", "httptools (>=0.6.3)
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.14"
-content-hash = "645b3c22f0f5f24b64cbb832d608f474d540890dc9f895d166912f8a7328b7c2"
+content-hash = "efd1e13125cb129bbd55fa965176fd53db61725510c524f178f327f1a2acd0e2"
