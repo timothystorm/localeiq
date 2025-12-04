@@ -43,7 +43,7 @@ help:
 # ----------------------------------------------------------------------------
 test:
 	@echo "\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] Running tests (pytest)...\033[0m"
-	@poetry run pytest -v --tb=short --no-header
+	@poetry run pytest --tb=short --no-header
 
 test-async:
 	@echo "\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] Running async tests (pytest-asyncio)...\033[0m"
