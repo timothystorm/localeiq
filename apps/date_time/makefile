@@ -1,4 +1,4 @@
--include ../../.makefile
+-include ../../makefile
 
 # ----------------------------------------------------------------------------
 # Server startup - dev only!

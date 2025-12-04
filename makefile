@@ -26,6 +26,7 @@ help:
 	@echo "  clean-cache Clean pycache and pytest caches"
 	@echo "  clean-venv  Clean venv environments"
 	@echo "  type-check  Run type checking"
+	@echo "  lint-check  Run linting checks only"
 	@echo "  lint-fix    Run linting and auto-fix issues"
 	@echo "  format      Format code"
 	@echo "  lint        Run all linting tasks (type-check, lint-fix, format)"
@@ -56,6 +57,10 @@ test-async:
 type-check:
 	@echo "\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] Type checking (mypy)...\033[0m"
 	@poetry run mypy $(ROOT_DIR) || exit 1
+
+lint-check:
+	@echo "\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] Lint check (ruff)...\033[0m"
+	@poetry run ruff check $(ROOT_DIR) || exit 1
 
 lint-fix:
 	@echo "\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] Lint fix (ruff)...\033[0m"

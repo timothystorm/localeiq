@@ -7,7 +7,7 @@ from pendulum import DateTime
 
 class Clock(ABC):
     """
-    Abstract clock interface for getting the current time.
+    Abstract clock interface for working with date and time.
     """
 
     @abstractmethod

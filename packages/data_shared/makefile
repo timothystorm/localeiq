@@ -1,4 +1,4 @@
--include ../../.makefile
+-include ../../makefile
 
 help-extra:
 	@echo ""
