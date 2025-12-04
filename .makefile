@@ -5,10 +5,10 @@
 # need to add custom commands, or use it directly as a symlink if you only.
 #
 # To include in a new module makefile, add (at the top of the module makefile):
-# -include ../../makefile
+# -include ../../.makefile
 #
 # To create a symlink in a new module directory, run:
-# `ln -s ../../makefile makefile`
+# `ln -s ../../.makefile makefile`
 #
 # see: help target for enriching help output in child makefiles.
 # ----------------------------------------------------------------------------
