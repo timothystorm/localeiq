@@ -6,7 +6,7 @@ client = TestClient(app)
 
 
 def test_get_current_time():
-    response = client.get("/v1/time", params={"timezone": "America/Denver"})
+    response = client.get("/v1/time/now", params={"timezone": "America/Denver"})
     assert response.status_code == 200
     data = response.json()
 
@@ -16,7 +16,7 @@ def test_get_current_time():
 
 
 def test_get_current_time_default_timezone():
-    response = client.get("/v1/time")  # no timezone parameter
+    response = client.get("/v1/time/now")  # no timezone parameter
     assert response.status_code == 200
     data = response.json()
 

@@ -15,7 +15,7 @@ def list_timezones() -> List[str]:
     return list(available_timezones())
 
 
-def to_valid_timezone(tz: str | None) -> str | None:
+def to_valid_timezone(tz: str | None) -> str:
     """
     Converts the given timezone string into a valid  IANA timezones.
     If the timezone is invalid an InvalidTimezone exception is raised with a suggestion if possible.
@@ -24,6 +24,7 @@ def to_valid_timezone(tz: str | None) -> str | None:
 
     :param tz: Timezone string to convert
     :return: Valid timezone string or raises ValueError
+    :raises InvalidTimezone: If the timezone is invalid
     """
     if tz == "" or tz is None:
         return "UTC"
@@ -35,7 +36,7 @@ def to_valid_timezone(tz: str | None) -> str | None:
     raise InvalidTimezone(
         f"Invalid timezone, did you mean '{matches[0]}'"
         if matches
-        else "Invalid timezone"
+        else f"Invalid timezone {tz}"
     )
 
 
@@ -60,3 +61,17 @@ class TimeService:
             raise InvalidTimezone(
                 f"Invalid timezone: {tz}, try using `to_valid_timezone()`"
             ) from e
+
+    def convert(self, dt: str, from_tz: str, to_tz: str = "UTC") -> pendulum.DateTime:
+        """
+        Converts the given datetime string from one timezone to another.
+
+        :param dt: Datetime string to convert.
+        :param from_tz: Source timezone.
+        :param to_tz: Target timezone. Defaults to "UTC".
+        :return: Converted datetime in the target timezone.
+        """
+        source_tz = to_valid_timezone(from_tz)
+        target_tz = to_valid_timezone(to_tz)
+        parsed_dt = self._clock.parse(dt, tz=source_tz)
+        return parsed_dt.in_timezone(target_tz)

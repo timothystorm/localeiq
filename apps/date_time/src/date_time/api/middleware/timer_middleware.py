@@ -19,7 +19,7 @@ class TimerMiddleware(BaseHTTPMiddleware):
         # process chain
         response = await call_next(request)
 
-        time.sleep(0.134)  # light traversal round equator
+        # time.sleep(0.134)  # light traversal round equator
 
         # solve and emit process time
         process_time = round(
