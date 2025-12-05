@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: localeiq-db
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    volumes:
+      - localeiq_data_volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U localeiq"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: localeiq-pgadmin
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    ports:
+      - "8080:80"
+    volumes:
+      - localeiq_pgadmin_volume:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
+volumes:
+  localeiq_data_volume:
+  localeiq_pgadmin_volume:

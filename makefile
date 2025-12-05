@@ -34,6 +34,7 @@ help:
 	@echo "  test        Run tests synchronously"
 	@echo "  test-async  Run tests asynchronously"
 	@echo "  help        Show this help message"
+	@echo "  ------------------------------------------------------------"
 	@$(MAKE) help-extra || true
 
 # ----------------------------------------------------------------------------

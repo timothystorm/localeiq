@@ -3,7 +3,7 @@ name = "date-time"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Timothy Storm",email = "timothystorm@gmail.com"}
+    { name = "Timothy Storm", email = "timothystorm@gmail.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.14"
@@ -15,11 +15,11 @@ dependencies = [
 ]
 
 [tool.poetry.dependencies]
-utils = {path = "../../packages/utils", develop = true}
-data_shared = {path = "../../packages/data_shared", develop = true}
+utils = { path = "../../packages/utils", develop = true }
+data_shared = { path = "../../packages/data_shared", develop = true }
 
 [tool.poetry]
-packages = [{include = "date_time", from = "src"}]
+packages = [{ include = "date_time", from = "src" }]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
