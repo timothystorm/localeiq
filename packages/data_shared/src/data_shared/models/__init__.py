@@ -1,3 +1,3 @@
-from .country import Country
+from data_shared.models.country_bronze import CountryBronze
 
-__all__ = ["Country"]
+__all__ = ["CountryBronze"]

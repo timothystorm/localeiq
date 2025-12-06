@@ -2,7 +2,7 @@ import os
 
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
+from sqlalchemy import engine_from_config, text
 from sqlalchemy import pool
 
 from alembic import context
@@ -84,6 +84,10 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection, target_metadata=target_metadata
         )
+
+        # ⭕ CREATE SCHEMA IF NOT EXISTS
+        for schema_name in ["bronze", "silver", "gold"]:
+            connection.execute(text(f"CREATE SCHEMA IF NOT EXISTS {schema_name}"))
 
         with context.begin_transaction():
             context.run_migrations()
