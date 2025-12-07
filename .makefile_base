@@ -30,7 +30,7 @@ MODULES = 'packages/data_shared' 'packages/utils' 'apps/date_time'
 # help-extra:
 # ----------------------------------------------------------------------------
 help:
-	@echo "\033[0;34m\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] LocaleIQ makefile commands:\033[0m"
+	@echo "🚑 \033[0;34m\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] LocaleIQ makefile commands:\033[0m"
 	@echo "  clean       Clean virtual environments and caches"
 	@echo "  clean-cache Clean pycache and pytest caches"
 	@echo "  clean-venv  Clean venv environments"
@@ -51,7 +51,7 @@ help:
 # Ensure pytest is installed in the module's poetry environment.
 # ----------------------------------------------------------------------------
 test:
-	@echo "\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] Running tests (pytest)...\033[0m"
+	@echo "🧪 \033[0;34mtest: \033[0;33m$(MODULE)...\033[0;34m\033[0m"
 	@poetry run pytest --tb=short --no-header
 
 # ----------------------------------------------------------------------------
@@ -71,7 +71,12 @@ lint-fix:
 format:
 	@poetry run ruff format --quiet $(ROOT_DIR) || exit 1
 
-lint: type-check lint-fix format
+.PHONY: lint
+lint:
+	@echo "🚨 \033[0;34mlint: \033[0;33m$(MODULE)...\033[0;34m\033[0m"
+	@$(MAKE) type-check
+	@$(MAKE) lint-fix
+	@$(MAKE) format
 
 # ----------------------------------------------------------------------------
 # Utility commands
@@ -88,7 +93,12 @@ clean-cache:
 clean-venv:
 	@poetry env remove --all
 
-clean: clean-venv clean-cache
+.PHONE: clean
+clean:
+	@echo "🧹 \033[0;34mclean: \033[0;33m$(MODULE)...\033[0;34m\033[0m"
+	@$(MAKE) clean-cache
+	@$(MAKE) clean-venv
 
 setup:
+	@echo "🔨 \033[0;34msetup: \033[0;33m$(MODULE)...\033[0;34m\033[0m"
 	@poetry lock || exit 1 && poetry install || exit 1
