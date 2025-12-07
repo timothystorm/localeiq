@@ -31,14 +31,7 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = [
-    "pydantic (>=2.12.5)",
-    "fastapi (>=0.122.0)",
-    "uvicorn (>=0.38.0)",
-    "pendulum (>=3.1.0)",
-    "pydantic-settings (>=2.12.0)",
-
-]
+dependencies = []
 
 [tool.poetry]
 package-mode = false
@@ -48,10 +41,4 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [dependency-groups]
-dev = [
-    "httpx (>=0.28.1)",
-    "pytest (>=9.0.1)",
-    "mypy (>=1.18.2,<2.0.0)",
-    "ruff (>=0.14.6,<0.15.0)",
-    "pre-commit (>=4.5.0)"
-]
+dev = []
