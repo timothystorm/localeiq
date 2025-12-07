@@ -24,20 +24,20 @@ help:
 
 test:
 	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make test; \
+  		cd $(ROOT_DIR)/$$mod && make -s test; \
 	done
 
 lint:
 	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make lint; \
+  		cd $(ROOT_DIR)/$$mod && make -s lint; \
 	done
 
 clean:
 	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make clean; \
+  		cd $(ROOT_DIR)/$$mod && make -s clean; \
 	done
 
 setup:
 	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make setup; \
+  		cd $(ROOT_DIR)/$$mod && make -s setup; \
 	done
