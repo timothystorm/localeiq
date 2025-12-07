@@ -2,7 +2,7 @@ import uuid
 
 from sqlalchemy import Column, String, UUID, DateTime, func, Text
 
-from data_shared.base import Base
+from data_shared.models.base import Base
 
 
 class CountryBronze(Base):

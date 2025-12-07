@@ -40,8 +40,8 @@ jobs:
       - name: Install dependencies
         run: make setup
 
-      - name: Lint (ruff + mypy)
+      - name: Lint
         run: make lint
 
-      - name: Test (synchronous)
+      - name: Test
         run: make test

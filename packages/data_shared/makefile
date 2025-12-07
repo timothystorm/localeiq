@@ -1,5 +1,8 @@
--include ../../makefile
+-include ../../.makefile_base
 
+# ----------------------------------------------------------------------------
+# Database migrations (Alembic)
+# ----------------------------------------------------------------------------
 migrate-base:
 	@poetry run alembic downgrade base
 
