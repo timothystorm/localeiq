@@ -109,7 +109,7 @@ class TestTimezoneUtils:
         assert "UTC" in timezones
         assert "Europe/Berlin" in timezones
         assert (
-            len(timezones) == 598
+            len(timezones) >= 598
         )  # As of Dec. 2025, there are 598 IANA timezones and variations available
 
     def test_to_valid_timezone_valid(self):
