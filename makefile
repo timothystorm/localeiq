@@ -1,5 +1,9 @@
 # -----------------------------------------------------------------------------
-# Make file for all LocaleIQ Python modules.
+# Make file for all LocaleIQ Python modules. This file delegates to
+# individual module makefiles to perform tasks like testing, linting, and
+# setup.
+#
+# Review the base makefile - ./.makefile_base
 # ----------------------------------------------------------------------------
 ROOT_DIR := $(shell pwd)
 MODULE = $(notdir $(ROOT_DIR))

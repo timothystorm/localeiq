@@ -1,29 +1,17 @@
-import os
-
 from logging.config import fileConfig
 
+from alembic import context
 from sqlalchemy import engine_from_config, text
 from sqlalchemy import pool
 
-from alembic import context
-
-from dotenv import load_dotenv
-
-# Load .env.docker file if present
-load_dotenv()
+from data_shared.settings import settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-# Load dynamic database URL
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL is not set in environment or .env.docker file")
-
 # Inject the actual database URL
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
+config.set_main_option("sqlalchemy.url", settings.db_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -35,6 +23,8 @@ if config.config_file_name is not None:
 from data_shared.models.base import Base
 
 target_metadata = Base.metadata
+
+
 # target_metadata = None
 
 # other values from the config, defined by the needs of env.py,

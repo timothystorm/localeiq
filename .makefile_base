@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # Base Make file for LocaleIQ modules.
 #
-# You can either include this base makefile in your module's makefile if you
+# You can either include this base makefile in the module's makefile if you
 # need to add custom commands, or use it directly as a symlink if you only
 # need the standard commands.
 #
