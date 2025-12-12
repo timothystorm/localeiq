@@ -1,5 +1,3 @@
-from typing import List
-
 from fastapi import APIRouter, HTTPException
 from pendulum.tz.exceptions import InvalidTimezone
 
@@ -11,22 +9,9 @@ from core.api.router.chrono.chrono import (
 from core.service.chrono.chrono_service import (
     TimeService,
     to_valid_timezone,
-    list_timezones,
 )
 
 router = APIRouter(prefix="/v1/time", tags=["time"])
-
-
-@router.get(
-    "/zones",
-    response_model=List[str],
-    description="Returns a list of allowed timezones",
-)
-async def get_timezone_list() -> List[str]:
-    """
-    :return: A list of all available IANA timezones sorted alphabetically.
-    """
-    return list(sorted(list_timezones()))
 
 
 @router.get(

@@ -19,7 +19,7 @@ MODULE = $(notdir $(ROOT_DIR))
 # ----------------------------------------------------------------------------
 # List of all modules in the monorepo (in dependency order)
 # ----------------------------------------------------------------------------
-MODULES = 'packages/data_shared' 'packages/utils' 'apps/date_time'
+MODULES = 'packages/data_shared' 'packages/utils' 'apps/core'
 
 # ----------------------------------------------------------------------------
 # Help
