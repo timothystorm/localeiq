@@ -1,10 +1,11 @@
+from enum import Enum
+
 from pydantic import BaseModel, Field
-from sqlalchemy import Enum
 
 
 class TextDirection(Enum):
-    LTR = 1
-    RTL = 2
+    LTR = "ltr"
+    RTL = "rtl"
 
 
 class Language(BaseModel):
