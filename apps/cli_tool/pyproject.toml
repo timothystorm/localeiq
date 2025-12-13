@@ -8,10 +8,7 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "typer (>=0.20.0,<0.21.0)",
-    "pytest (>=9.0.2,<10.0.0)",
-    "mypy (>=1.19.0,<2.0.0)",
-    "ruff (>=0.14.9,<0.15.0)"
+    "typer (>=0.20.0,<0.21.0)"
 ]
 
 [project.scripts]
@@ -27,3 +24,10 @@ packages = [{include = "cli_tool", from = "src"}]
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.2,<10.0.0)",
+    "mypy (>=1.19.0,<2.0.0)",
+    "ruff (>=0.14.9,<0.15.0)"
+]
