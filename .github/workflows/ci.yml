@@ -32,9 +32,9 @@ jobs:
         run: make setup
 
       - name: Lint
-        run: |
-          echo "PYTHONPATH=$(find packages apps -type d -name src | paste -sd ':' -)" >> $GITHUB_ENV
-          make lint
+        env:
+          PYTHONPATH: apps/cli_tool/src:apps/rest_api/src:packages/data_store/src:packages/utils/src
+        run: make lint
 
       - name: Test
         run: make test
