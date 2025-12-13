@@ -20,6 +20,7 @@ MODULE_PATHS = 'packages/utils' 'packages/data_store' 'apps/rest_api' 'apps/cli_
 # ----------------------------------------------------------------------------
 help:
 	@echo "🚑  \033[0;34mLocaleIQ makefile commands:\033[0m"
+	@echo "  check       Run lint-check and type-checking"
 	@echo "  clean       Clean virtual environments and caches"
 	@echo "  lint        Run all linting tasks (type-check, lint-fix, format)"
 	@echo "  setup       Lock and install [$(MODULE)] dependencies"
@@ -31,6 +32,11 @@ test:
   		cd $(ROOT_DIR)/$$mod && make -s test; \
 	done
 
+check:
+	@for mod in $(MODULE_PATHS); do \
+  		cd $(ROOT_DIR)/$$mod && make -s check; \
+	done
+
 lint:
 	@for mod in $(MODULE_PATHS); do \
   		cd $(ROOT_DIR)/$$mod && make -s lint; \
@@ -40,6 +46,8 @@ clean:
 	@for mod in $(MODULE_PATHS); do \
   		cd $(ROOT_DIR)/$$mod && make -s clean; \
 	done
+
+init: setup
 
 setup:
 	@for mod in $(MODULE_PATHS); do \
