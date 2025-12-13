@@ -1,5 +1,5 @@
 [project]
-name = "cli-tool"
+name = "cli_tool"
 version = "0.1.0"
 description = ""
 authors = [
