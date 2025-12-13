@@ -31,7 +31,9 @@ dev = [
 ]
 
 [tool.mypy]
+mypy_path = ["src"]
 exclude = ["^alembic/"]
+namespace_packages = true
 ignore_missing_imports = true
 explicit_package_bases = true
 

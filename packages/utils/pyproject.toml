@@ -26,3 +26,9 @@ dev = [
     "mypy (>=1.19.0,<2.0.0)",
     "ruff (>=0.14.7,<0.15.0)"
 ]
+
+[tool.mypy]
+mypy_path = ["src"]
+namespace_packages = true
+ignore_missing_imports = true
+explicit_package_bases = true

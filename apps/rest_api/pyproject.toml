@@ -32,3 +32,9 @@ dev = [
     "pytest (>=9.0.2,<10.0.0)",
     "ruff (>=0.14.8,<0.15.0)",
 ]
+
+[too.mypy]
+mypy_path = ["src"]
+namespace_packages = true
+ignore_missing_imports = true
+explicit_package_bases = true

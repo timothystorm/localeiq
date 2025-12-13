@@ -10,9 +10,7 @@ def test_get_locale_returns_locale_model():
     assert response.status_code == 200
 
     payload = response.json()
-    assert "locale" in payload
-    assert isinstance(payload["locale"], str)
 
-    from rest_api.dto.locale_dto import Locale
+    from data_store.dto.locale_dto import LocaleDto
 
-    Locale.model_validate(payload)  # will raise if not a valid Locale
+    LocaleDto.model_validate(payload)  # will raise if not a valid Locale
