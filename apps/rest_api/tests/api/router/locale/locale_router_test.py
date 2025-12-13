@@ -13,6 +13,6 @@ def test_get_locale_returns_locale_model():
     assert "locale" in payload
     assert isinstance(payload["locale"], str)
 
-    from rest_api.api.router.locale.locale_dto import Locale
+    from rest_api.dto.locale_dto import Locale
 
     Locale.model_validate(payload)  # will raise if not a valid Locale

@@ -20,7 +20,7 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from data_store.models.base import Base
+from data_store.schema.base import Base
 
 target_metadata = Base.metadata
 
@@ -72,7 +72,10 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection,
+            target_metadata=target_metadata,
+            include_schemas=True,
+            compare_type=True
         )
 
         # ⭕ CREATE SCHEMA IF NOT EXISTS

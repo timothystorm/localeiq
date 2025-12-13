@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# ------------------------------------
+# Create .env file for LocaleIQ data store setup.  Only to be run once.
+# Prompts user for necessary configuration values
+# and writes them to a .env file.
+#
+# Usage: ./setup.env.sh
+# ------------------------------------
+
 set -e  # Exit on error
 
 ENV_FILE=".env"

@@ -8,7 +8,7 @@ class TextDirection(Enum):
     RTL = "rtl"
 
 
-class Language(BaseModel):
+class LanguageDto(BaseModel):
     code: str = Field(
         ..., description="ISO 639 language code", examples=["en", "zh", "fr"]
     )

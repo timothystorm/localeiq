@@ -1,11 +1,12 @@
 import uuid
 
-from sqlalchemy import Column, String, UUID, DateTime, func, Text
+from sqlalchemy import Column, String, UUID, Text
 
-from data_store.models.base import Base
+from data_store.schema.base import Base
+from data_store.schema.bronze_provenance_mixin import BronzeProvenanceMixin
 
 
-class CountryBronze(Base):
+class CountryBronzeSchema(BronzeProvenanceMixin, Base):
     __tablename__ = "countries"
     __table_args__ = {
         "schema": "bronze",
@@ -18,24 +19,8 @@ class CountryBronze(Base):
     iso_alpha_2 = Column(String(2), nullable=True, comment="e.g., 'US', 'CA'")
     iso_alpha_3 = Column(String(3), nullable=True, comment="e.g., 'USA', 'CAN'")
     iso_num = Column(String(3), nullable=True, comment="e.g., '840', '124'")
-    source_name = Column(
-        String(64), nullable=False, comment="'CLDR', 'Wikipedia', etc."
-    )
     notes = Column(Text, nullable=True, comment="Optional notes about the record")
-
-    # Language/culture (for later mapping)
-    # language = Column(String(16), nullable=True)  # e.g., "en", "es", etc.
-    # script = Column(String(32), nullable=True)  # e.g., "Latn", "Cyrl"
-    # Store raw blob if needed (good for patching or recovery)
     # raw_data = Column(JSON, nullable=True)
-
-    # Metadata
-    created_at = Column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    updated_at = Column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
 
     def __repr__(self):
         return f"<bronze.country(id={self.id}, name={self.name}, source={self.source_name})>"

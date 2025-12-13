@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pendulum.tz.exceptions import InvalidTimezone
 
-from rest_api.api.router.chrono.chrono_dto import (
+from rest_api.dto.chrono_dto import (
     DateTimeConvertResponse,
     DateTimeConvertInput,
     DateTimeResponse,

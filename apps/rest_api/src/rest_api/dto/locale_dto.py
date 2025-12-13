@@ -1,12 +1,12 @@
 from pydantic import BaseModel, Field
 
-from rest_api.api.router.language.language_dto import Language
+from data_store.dto.language_dto import LanguageDto
 
 
 class Locale(BaseModel):
     """
     A locale represents a specific linguistic and regional setting,
-    typically used for internationalization and localization purposes.
+    typically used for internationalization and localization.
     """
 
     locale: str = Field(
@@ -15,6 +15,4 @@ class Locale(BaseModel):
         examples=["en-US", "zh-Hant-TW", "fr-FR"],
     )
 
-    language: Language = Field(
-        ..., description="The language associated with this locale"
-    )
+    language: LanguageDto
