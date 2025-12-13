@@ -16,7 +16,7 @@ liq = "cli_tool.main:app"
 
 [tool.poetry.dependencies]
 utils = { path = "../../packages/utils", develop = true }
-data_shared = { path = "../../packages/data_store", develop = true }
+data_store = { path = "../../packages/data_store", develop = true }
 
 [tool.poetry]
 packages = [{include = "cli_tool", from = "src"}]

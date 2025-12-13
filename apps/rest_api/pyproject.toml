@@ -16,7 +16,7 @@ dependencies = [
 
 [tool.poetry.dependencies]
 utils = { path = "../../packages/utils", develop = true }
-data_shared = { path = "../../packages/data_store", develop = true }
+data_store = { path = "../../packages/data_store", develop = true }
 
 [tool.poetry]
 packages = [{ include = "rest_api", from = "src" }]
