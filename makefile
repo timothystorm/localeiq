@@ -27,28 +27,31 @@ help:
 	@echo "  test        Run tests synchronously"
 	@echo "  help        Show this help message"
 
+.PHONY: test
 test:
 	@for mod in $(MODULE_PATHS); do \
   		cd $(ROOT_DIR)/$$mod && make -s test; \
 	done
 
+.PHONY: check
 check:
 	@for mod in $(MODULE_PATHS); do \
   		cd $(ROOT_DIR)/$$mod && make -s check; \
 	done
 
+.PHONY: lint
 lint:
 	@for mod in $(MODULE_PATHS); do \
   		cd $(ROOT_DIR)/$$mod && make -s lint; \
 	done
 
+.PHONY: clean
 clean:
 	@for mod in $(MODULE_PATHS); do \
   		cd $(ROOT_DIR)/$$mod && make -s clean; \
 	done
 
-init: setup
-
+.PHONY: setup
 setup:
 	@for mod in $(MODULE_PATHS); do \
   		cd $(ROOT_DIR)/$$mod && make -s setup; \

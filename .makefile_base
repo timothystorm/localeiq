@@ -60,6 +60,7 @@ type-check:
 lint-check:
 	@poetry run ruff check --quiet $(ROOT_DIR) || exit 1
 
+.PHONY: check
 check:
 	@echo "🔍 \033[0;34mcheck \033[0;33m$(MODULE)...\033[0;34m\033[0m"
 	@$(MAKE) type-check
@@ -71,6 +72,7 @@ lint-fix:
 format:
 	@poetry run ruff format --quiet $(ROOT_DIR) || exit 1
 
+.PHONY: lint
 lint:
 	@echo "🚨 \033[0;34mlint \033[0;33m$(MODULE)...\033[0;34m\033[0m"
 	@$(MAKE) type-check
@@ -92,6 +94,7 @@ clean-cache:
 clean-venv:
 	@poetry env remove --all
 
+PHONE: clean
 clean:
 	@echo "🧹 \033[0;34mclean \033[0;33m$(MODULE)...\033[0;34m\033[0m"
 	@$(MAKE) clean-cache
