@@ -5,7 +5,7 @@ LocaleIQ uses Poetry to manage its dependencies. To add a new dependency, follow
 For example, adding a new package to the `apps/core` project:
 
 ```bash
-   poetry --directory apps/core install <package-name>
+   poetry --directory apps/rest_api install <package-name>
 ```
 
 > Don't forget the `--directory` flag to specify the correct project path.

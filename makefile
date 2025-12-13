@@ -11,7 +11,7 @@ MODULE = $(notdir $(ROOT_DIR))
 # ----------------------------------------------------------------------------
 # List of all modules in the monorepo (in dependency order)
 # ----------------------------------------------------------------------------
-MODULE_PATHS = 'packages/utils' 'packages/data_shared' 'apps/core'
+MODULE_PATHS = 'packages/utils' 'packages/data_store' 'apps/rest_api' 'apps/cli_tool'
 
 # ----------------------------------------------------------------------------
 # Help

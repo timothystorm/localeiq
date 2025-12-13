@@ -17,11 +17,6 @@ ROOT_DIR := $(shell pwd)
 MODULE = $(notdir $(ROOT_DIR))
 
 # ----------------------------------------------------------------------------
-# List of all modules in the monorepo (in dependency order)
-# ----------------------------------------------------------------------------
-MODULES = 'packages/data_shared' 'packages/utils' 'apps/core'
-
-# ----------------------------------------------------------------------------
 # Help
 #
 # Child makefiles should add `help-extra` target to add more help info.
@@ -51,7 +46,7 @@ help:
 # Ensure pytest is installed in the module's poetry environment.
 # ----------------------------------------------------------------------------
 test:
-	@echo "🧪 \033[0;34mtest: \033[0;33m$(MODULE)...\033[0;34m\033[0m"
+	@echo "🧪 \033[0;34mtest \033[0;33m$(MODULE)...\033[0;34m\033[0m"
 	@poetry run pytest --tb=short --no-header
 
 # ----------------------------------------------------------------------------
@@ -73,7 +68,7 @@ format:
 
 .PHONY: lint
 lint:
-	@echo "🚨 \033[0;34mlint: \033[0;33m$(MODULE)...\033[0;34m\033[0m"
+	@echo "🚨 \033[0;34mlint \033[0;33m$(MODULE)...\033[0;34m\033[0m"
 	@$(MAKE) type-check
 	@$(MAKE) lint-fix
 	@$(MAKE) format
@@ -95,10 +90,10 @@ clean-venv:
 
 .PHONE: clean
 clean:
-	@echo "🧹 \033[0;34mclean: \033[0;33m$(MODULE)...\033[0;34m\033[0m"
+	@echo "🧹 \033[0;34mclean \033[0;33m$(MODULE)...\033[0;34m\033[0m"
 	@$(MAKE) clean-cache
 	@$(MAKE) clean-venv
 
 setup:
-	@echo "🔨 \033[0;34msetup: \033[0;33m$(MODULE)...\033[0;34m\033[0m"
+	@echo "🔨 \033[0;34msetup \033[0;33m$(MODULE)...\033[0;34m\033[0m"
 	@poetry lock || exit 1 && poetry install || exit 1
