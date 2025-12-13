@@ -1,15 +1,17 @@
 from fastapi import APIRouter
 
+from data_store.dto.locale_dto import LocaleDto
+
 router = APIRouter(prefix="/v1/locale", tags=["locale", "region"])
 
 
 @router.get(
     "/{locale_tag}",
-    response_model=dict,
+    response_model=LocaleDto,
     description="Get the default locale information",
     response_model_exclude_none=True,
 )
-async def get_locale(locale_tag: str) -> dict:
+async def get_locale(locale_tag: str) -> LocaleDto:
     # language = LanguageDto(
     #     code=locale_tag.split("-")[0],
     #     name="English",
@@ -18,4 +20,4 @@ async def get_locale(locale_tag: str) -> dict:
     #     text_direction=TextDirection.LTR,
     #     fallback_chain=["en"],
     # )
-    return {"tag": "en-US", "language": "en", "region": "US", "script": "Latn"}
+    return LocaleDto(tag="en-US", language="en", region="US", script="Latn")
