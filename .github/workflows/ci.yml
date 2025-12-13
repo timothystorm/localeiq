@@ -9,7 +9,11 @@ env:
   PYTHON_VERSION: "3.14"
   POETRY_VERSION: "2.2.1"
   POETRY_VIRTUALENVS_IN_PROJECT: "true"
-  PYTHONPATH: apps/cli_tool/src:apps/rest_api/src:packages/data_store/src:packages/utils/src
+  PYTHONPATH: >
+    apps/cli_tool/src:
+    apps/rest_api/src:
+    packages/data_store/src:
+    packages/utils/src
 
 jobs:
   build-and-test:
