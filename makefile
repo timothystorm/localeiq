@@ -41,9 +41,8 @@ check:
 
 .PHONY: lint
 lint:
-	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s lint || exit $$?; \
-	done
+	@echo "🚨 lint..."
+	@poetry run mypy packages apps
 
 .PHONY: clean
 clean:
