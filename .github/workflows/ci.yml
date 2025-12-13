@@ -31,6 +31,10 @@ jobs:
       - name: Install dependencies
         run: make setup
 
+      - name: Set PYTHONPATH
+        run: |
+          echo "PYTHONPATH=$(find packages apps -type d -name src | paste -sd ':' -)" >> $GITHUB_ENV
+
       - name: Lint
         run: make lint
 
