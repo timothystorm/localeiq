@@ -30,29 +30,29 @@ help:
 .PHONY: test
 test:
 	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s test; \
+  		cd $(ROOT_DIR)/$$mod && make -s test || exit $$?; \
 	done
 
 .PHONY: check
 check:
 	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s check; \
+  		cd $(ROOT_DIR)/$$mod && make -s check || exit $$?; \
 	done
 
 .PHONY: lint
 lint:
 	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s lint; \
+  		cd $(ROOT_DIR)/$$mod && make -s lint || exit $$?; \
 	done
 
 .PHONY: clean
 clean:
 	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s clean; \
+  		cd $(ROOT_DIR)/$$mod && make -s clean || exit $$?; \
 	done
 
 .PHONY: setup
 setup:
 	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s setup; \
+  		cd $(ROOT_DIR)/$$mod && make -s setup || exit $$?; \
 	done

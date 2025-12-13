@@ -10,10 +10,10 @@ env:
   POETRY_VERSION: "2.2.1"
   POETRY_VIRTUALENVS_IN_PROJECT: "true"
   PYTHONPATH: >
-    apps/cli_tool/src:
-    apps/rest_api/src:
-    packages/data_store/src:
-    packages/utils/src
+    ${{ github.workspace }}/apps/cli_tool/src:
+    ${{ github.workspace }}/apps/rest_api/src:
+    ${{ github.workspace }}/packages/data_store/src:
+    ${{ github.workspace }}/packages/utils/src
 
 jobs:
   build-and-test:
