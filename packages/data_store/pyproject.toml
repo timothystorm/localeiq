@@ -1,5 +1,5 @@
 [project]
-name = "data-shared"
+name = "data-store"
 version = "0.1.0"
 description = ""
 authors = [
