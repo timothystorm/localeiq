@@ -34,7 +34,6 @@ dev = [
 exclude = ["^alembic/"]
 ignore_missing_imports = true
 explicit_package_bases = true
-mypy_path = "packages/data_store/src:packages/utils/src"
 
 [tool.ruff]
 exclude = ["alembic"]
