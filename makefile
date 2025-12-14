@@ -35,11 +35,10 @@ lint:
 
 setup:
 	@echo "🏗️  ${BLUE}SETUP WORKSPACE...${NC}"
-	@#poetry --version
-	@# use the current python version for the poetry environment
-	@#poetry env use $$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')") >/dev/null 2>&1 || true
 	@poetry lock
 	@poetry install
+	@poetry env use $$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')") >/dev/null 2>&1
+	@poetry run pre-commit install
 
 test:
 	@echo "🧪  ${BLUE}TEST WORKSPACE...${NC}"
