@@ -19,6 +19,7 @@ help:
 	@echo "  lint        Run all linting tasks (type-check, lint-fix, format)"
 	@echo "  setup       Lock and install dependencies"
 	@echo "  test        Run tests synchronously"
+	@echo "  venv        Setup and activate the Poetry virtual environment"
 	@echo "  help        Show this help message"
 
 clean:
@@ -38,13 +39,21 @@ lint:
 	@poetry run ruff check --fix --quiet .
 	@poetry run mypy --no-error-summary packages apps
 
+lint-check:
+	@echo "🎨  ${BLUE}LINT WORKSPACE...${NC}"
+	@poetry run ruff check .
+	@poetry run mypy packages apps
+
+
 setup:
 	@echo "🏗️  ${BLUE}SETUP WORKSPACE...${NC}"
 	@poetry lock
 	@poetry install
-	@echo "➕ ${YELLOW}SETUP VIRTUAL ENVIRONMENT - RUN THIS COMMAND...${NC}"
-	@poetry env activate
 
 test:
 	@echo "🧪  ${BLUE}TEST WORKSPACE...${NC}"
 	@poetry run pytest
+
+venv:
+	@echo "🐍 ${YELLOW}SETUP VIRTUAL ENVIRONMENT - RUN THIS COMMAND...${NC}"
+	@poetry env activate

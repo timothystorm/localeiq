@@ -37,7 +37,7 @@ jobs:
         run: make setup
 
       - name: Lint
-        run: make lint
+        run: make lint-check
 
       - name: Test
         run: make test
