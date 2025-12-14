@@ -1,16 +1,16 @@
 repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.9
+    hooks:
+      - id: ruff-format
+        language: system
+      - id: ruff
+        language: system
+
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.8.0
+    rev: v1.19.0
     hooks:
       - id: mypy
         language: system
         exclude: "(alembic|migrations)"
         args: [ "--install-types", "--non-interactive" ]
-
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
-    hooks:
-      - id: ruff
-        language: system
-      - id: ruff-format
-        language: system

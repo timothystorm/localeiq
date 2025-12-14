@@ -15,6 +15,7 @@ YELLOW=\033[1;33m
 help:
 	@echo "✨ ${CYAN}COMMANDS:${NC}"
 	@echo "  clean       Clean all build artifacts and virtual environments"
+	@echo "  hooks       Install pre-commit git hooks"
 	@echo "  lint        Run all linting tasks (type-check, lint-fix, format)"
 	@echo "  setup       Lock and install dependencies"
 	@echo "  test        Run tests synchronously"
@@ -27,6 +28,10 @@ clean:
 	@find packages apps -type d -name ".pytest_cache" -exec rm -rf {} +
 	@find packages apps -type d -name ".ruff_cache" -exec rm -rf {} +
 
+hooks:
+	@echo "🔗  ${BLUE}INSTALL WORKSPACE PRE-COMMIT HOOKS...${NC}"
+	@poetry run pre-commit install
+
 lint:
 	@echo "🎨  ${BLUE}LINT WORKSPACE...${NC}"
 	@poetry run ruff format --quiet .
@@ -37,8 +42,6 @@ setup:
 	@echo "🏗️  ${BLUE}SETUP WORKSPACE...${NC}"
 	@poetry lock
 	@poetry install
-	@poetry run pre-commit install
-
 	@echo "➕ ${YELLOW}SETUP VIRTUAL ENVIRONMENT - RUN THIS COMMAND...${NC}"
 	@poetry env activate
 
