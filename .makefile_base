@@ -10,99 +10,45 @@
 #
 # To create a symlink in a new module directory, run:
 # `ln -s ../../.makefile_base makefile`
-#
-# see: help target for enriching help output in child makefiles.
 # ----------------------------------------------------------------------------
 ROOT_DIR := $(shell pwd)
 MODULE = $(notdir $(ROOT_DIR))
 
-# ----------------------------------------------------------------------------
-# Help
-#
+# Color codes
+BLUE=\033[0;34m
+CYAN=\033[0;36m
+GREEN=\033[0;32m
+NC=\033[0m # No Color
+RED=\033[0;31m
+YELLOW=\033[1;33m
+
+# -------------------------------------------------------------
 # Child makefiles should add `help-extra` target to add more help info.
-# If you have no extra help to add, you can define an empty target.
-#
-# help-extra:
-# ----------------------------------------------------------------------------
+# If you have no extra help to add, you can define an empty `help-extra:` target.
+# -------------------------------------------------------------
 help:
-	@echo "🚑 \033[0;34m\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] LocaleIQ makefile commands:\033[0m"
-	@echo "  clean       Clean virtual environments and caches"
-	@echo "  clean-cache Clean pycache and pytest caches"
-	@echo "  clean-venv  Clean venv environments"
-	@echo "  type-check  Run type checking"
-	@echo "  lint-check  Run linting checks only"
-	@echo "  lint-fix    Run linting and auto-fix issues"
-	@echo "  format      Format code"
+	@echo "✨ ${CYAN}COMMANDS:${NC}"
 	@echo "  lint        Run all linting tasks (type-check, lint-fix, format)"
-	@echo "  setup       Lock and install [$(MODULE)] dependencies"
 	@echo "  test        Run tests synchronously"
 	@echo "  help        Show this help message"
 	@echo "  ------------------------------------------------------------"
 	@$(MAKE) help-extra || true
 
-# ----------------------------------------------------------------------------
-# Testing
-#
-# Ensure pytest is installed in the module's poetry environment.
-# ----------------------------------------------------------------------------
-test:
-	@echo "🧪 \033[0;34mtest \033[0;33m$(MODULE)...\033[0;34m\033[0m"
-	@poetry run pytest --tb=short --no-header
-
-# ----------------------------------------------------------------------------
-# Linting & Formatting
-#
-# Ensure mypy and ruff are installed in the module's poetry environment.
-# ----------------------------------------------------------------------------
-type-check:
-	@poetry run mypy --no-error-summary $(ROOT_DIR) || exit 1
-
-lint-check:
-	@poetry run ruff check --quiet $(ROOT_DIR) || exit 1
-
-.ONESHELL:
-check:
-	set -e
-	@echo "🔍 \033[0;34mcheck \033[0;33m$(MODULE)...\033[0;34m\033[0m"
-	@$(MAKE) type-check
-	@$(MAKE) lint-check
-
-lint-fix:
-	@poetry run ruff check --fix --quiet $(ROOT_DIR) || exit 1
-
-format:
-	@poetry run ruff format --quiet $(ROOT_DIR) || exit 1
-
-.ONESHELL:
-lint:
-	set -e
-	@echo "🚨 \033[0;34mlint \033[0;33m$(MODULE)...\033[0;34m\033[0m"
-	@$(MAKE) type-check
-	@$(MAKE) lint-fix
-	@$(MAKE) format
-
-# ----------------------------------------------------------------------------
-# Utility commands
-#
-# Ensure poetry is installed on the system and poetry env is set up for the
-# module.
-# ----------------------------------------------------------------------------
-clean-cache:
+clean:
+	@echo "🧼  ${YELLOW}CLEAN $(MODULE)...${NC}"
 	@find $(ROOT_DIR) -type d -name "__pycache__" -exec rm -rf {} +
 	@find $(ROOT_DIR) -type d -name ".mypy_cache" -exec rm -rf {} +
 	@find $(ROOT_DIR) -type d -name ".pytest_cache" -exec rm -rf {} +
 	@find $(ROOT_DIR) -type d -name ".ruff_cache" -exec rm -rf {} +
+    # sugmodules should NOT have their own lock file - only the root poetry.lock should be used
+	@find $(ROOT_DIR) -type d -name "poetry.lock" -exec rm -rf {} +
 
-clean-venv:
-	@poetry env remove --all
+lint:
+	@echo "🎨  ${YELLOW}LINT $(MODULE)...${NC}"
+	@poetry run ruff format --quiet .
+	@poetry run ruff check --fix --quiet .
+	@poetry run mypy --no-error-summary .
 
-.ONESHELL:
-clean:
-	set -e
-	@echo "🧹 \033[0;34mclean \033[0;33m$(MODULE)...\033[0;34m\033[0m"
-	@$(MAKE) clean-cache
-	@$(MAKE) clean-venv
-
-setup:
-	@echo "🔨 \033[0;34msetup \033[0;33m$(MODULE)...\033[0;34m\033[0m"
-	@poetry lock || exit 1 && poetry install || exit 1
+test:
+	@echo "🧪  ${YELLOW}TEST $(MODULE)...${NC}"
+	@poetry run pytest

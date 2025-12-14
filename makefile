@@ -1,57 +1,46 @@
 # -----------------------------------------------------------------------------
-# Make file for all LocaleIQ Python modules. This file delegates to
-# individual module makefiles to perform tasks like testing, linting, and
-# setup.
+# Make file for monorepo LocaleIQ project.
 #
 # Review the base makefile - ./.makefile_base
 # ----------------------------------------------------------------------------
-ROOT_DIR := $(shell pwd)
-MODULE = $(notdir $(ROOT_DIR))
 
-# ----------------------------------------------------------------------------
-# List of all modules in the monorepo (in dependency order)
-# ----------------------------------------------------------------------------
-MODULE_PATHS = 'packages/utils' 'packages/data_store' 'apps/rest_api' 'apps/cli_tool'
+# Color codes
+BLUE=\033[0;34m
+CYAN=\033[0;36m
+GREEN=\033[0;32m
+NC=\033[0m # No Color
+RED=\033[0;31m
+YELLOW=\033[1;33m
 
-# ----------------------------------------------------------------------------
-# Help
-#
-# Child makefiles can add `help-extra` target to add more help info.
-# ----------------------------------------------------------------------------
 help:
-	@echo "🚑  \033[0;34mLocaleIQ makefile commands:\033[0m"
-	@echo "  check       Run lint-check and type-checking"
-	@echo "  clean       Clean virtual environments and caches"
+	@echo "✨ ${CYAN}COMMANDS:${NC}"
+	@echo "  clean       Clean all build artifacts and virtual environments"
 	@echo "  lint        Run all linting tasks (type-check, lint-fix, format)"
-	@echo "  setup       Lock and install [$(MODULE)] dependencies"
+	@echo "  setup       Lock and install dependencies"
 	@echo "  test        Run tests synchronously"
 	@echo "  help        Show this help message"
 
-.PHONY: test
-test:
-	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s test || exit $$?; \
-	done
-
-.PHONY: check
-check:
-	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s check || exit $$?; \
-	done
-
-.PHONY: lint
-lint:
-	@echo "🚨 lint..."
-	@poetry run mypy packages apps
-
-.PHONY: clean
 clean:
-	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s clean || exit $$?; \
-	done
+	@echo "🧼  ${BLUE}CLEAN WORKSPACE...${NC}"
+	@find packages apps -type d -name "__pycache__" -exec rm -rf {} +
+	@find packages apps -type d -name ".mypy_cache" -exec rm -rf {} +
+	@find packages apps -type d -name ".pytest_cache" -exec rm -rf {} +
+	@find packages apps -type d -name ".ruff_cache" -exec rm -rf {} +
 
-.PHONY: setup
+lint:
+	@echo "🎨  ${BLUE}LINT WORKSPACE...${NC}"
+	@poetry run ruff format --quiet .
+	@poetry run ruff check --fix --quiet .
+	@poetry run mypy --no-error-summary packages apps
+
 setup:
-	@for mod in $(MODULE_PATHS); do \
-  		cd $(ROOT_DIR)/$$mod && make -s setup || exit $$?; \
-	done
+	@echo "🏗️  ${BLUE}SETUP WORKSPACE...${NC}"
+	@#poetry --version
+	@# use the current python version for the poetry environment
+	@#poetry env use $$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')") >/dev/null 2>&1 || true
+	@poetry lock
+	@poetry install
+
+test:
+	@echo "🧪  ${BLUE}TEST WORKSPACE...${NC}"
+	@poetry run pytest

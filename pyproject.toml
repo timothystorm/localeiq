@@ -1,21 +1,18 @@
 #========================================================================================
-# ROOT-LEVEL pyproject.toml (NOTE FOR DEVELOPERS)
-#
-# This file exists ONLY because PyCharm requires a pyproject.toml at the repo root
-# in order to resolve imports, indexing, refactoring, and test discovery.
+# ROOT-LEVEL pyproject.toml
 #
 # IMPORTANT:
 #   • DO NOT add runtime dependencies here.
 #   • DO NOT treat this as a real Python package.
-#   • DO NOT run `poetry add` at the root.
 #
 # SUBMODULES:
 #   Every actual package lives in its own directory with its own pyproject.toml.
 #   Use those to manage real dependencies.
 #
 # PYCHARM QUIRKS:
-#   PyCharm may automatically add submodule dependencies to this file.
-#   This is expected and harmless. Ignore those entries.
+#   PyCharm may automatically add submodule dependencies to this file when
+#   adding dependencies to submodules. This is expected and harmless. Ignore
+#   those entries.
 #
 # WORKFLOW:
 #   • Run all dev tasks (test, lint, build) *inside each submodule*.
@@ -30,15 +27,28 @@ authors = [
     { name = "Timothy Storm", email = "timothystorm@gmail.com" }
 ]
 readme = "README.md"
-requires-python = ">=3.14"
-dependencies = ["pendulum (>=3.1.0)", "pydantic (>=2.12.5)", "uvicorn (>=0.38.0)", "httpx (>=0.28.1)", "mypy (>=1.19.0)", "pytest (>=9.0.1)", "ruff (>=0.14.7)", "fastapi (>=0.123.5)"]
+requires-python = ">=3.13,<3.14"
 
 [tool.poetry]
 package-mode = false
+
+[tool.poetry.dependencies]
+rest-api = { path = "apps/rest_api", develop = true }
+cli-tool = { path = "apps/cli_tool", develop = true }
+data-store = { path = "packages/data_store", develop = true }
+utils = { path = "packages/utils", develop = true }
+
+[tool.poetry.group.dev.dependencies]
+httpx = "^0.24"
+mypy = "^1.10"
+pre-commit = "^4.5.0"
+pytest = "^9.0"
+pytest-xdist = "^3.8"
+ruff = "^0.14"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[dependency-groups]
-dev = []
+[tool.mypy]
+exclude = ["^alembic/"]

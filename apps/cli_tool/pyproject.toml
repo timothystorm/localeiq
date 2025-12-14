@@ -6,10 +6,13 @@ authors = [
     {name = "Timothy Storm",email = "timothystorm@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.13,<3.14"
 dependencies = [
     "typer (>=0.20.0,<0.21.0)"
 ]
+
+[virtualenvs]
+in-project = true
 
 [project.scripts]
 liq = "cli_tool.main:app"
@@ -24,15 +27,3 @@ packages = [{include = "cli_tool", from = "src"}]
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[dependency-groups]
-dev = [
-    "pytest (>=9.0.2,<10.0.0)",
-    "mypy (>=1.19.0,<2.0.0)",
-    "ruff (>=0.14.9,<0.15.0)"
-]
-
-[tool.mypy]
-mypy_path = ["src"]
-ignore_missing_imports = true
-explicit_package_bases = true
