@@ -1,23 +1,18 @@
+from typing import Optional
+
 from fastapi import APIRouter
 
 from data_store.dto.locale_dto import LocaleDto
+from rest_api.service.locale.locale_service import LocaleService
 
-router = APIRouter(prefix="/v1/locale", tags=["locale", "region"])
+router = APIRouter(prefix="/v1/locale", tags=["language", "locale", "region"])
 
 
 @router.get(
-    "/{locale_tag}",
-    response_model=LocaleDto,
-    description="Get the default locale information",
+    "/",
+    response_model=list[LocaleDto],
+    description="Get all the locales supported by LocaleIQ",
     response_model_exclude_none=True,
 )
-async def get_locale(locale_tag: str) -> LocaleDto:
-    # language = LanguageDto(
-    #     code=locale_tag.split("-")[0],
-    #     name="English",
-    #     name_local="English",
-    #     script="Latn",
-    #     text_direction=TextDirection.LTR,
-    #     fallback_chain=["en"],
-    # )
-    return LocaleDto(tag="en-US", language="en", region="US", script="Latn")
+async def get_locales(language: Optional[str] = None) -> list[LocaleDto]:
+    return LocaleService.get_locales(language)

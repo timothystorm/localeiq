@@ -4,7 +4,7 @@ from data_store.engine import SessionLocal
 
 
 @contextmanager
-def transaction():
+def read_only_session():
     session = SessionLocal()
     try:
         yield session
