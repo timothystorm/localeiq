@@ -7,7 +7,7 @@
 # ----------------------------------------------------------------------------
 start:
 	@echo "\033[0;34m[\033[0;33m$(MODULE)\033[0;34m] Starting development server (Ctrl + C to stop)...\033[0m"
-	@poetry run uvicorn core.main:app --reload --host 0.0.0.0 --port 8000
+	@poetry run uvicorn rest_api.main:app --reload --host 0.0.0.0 --port 8000
 
 help-extra:
 	@echo "  start       Start development sever"

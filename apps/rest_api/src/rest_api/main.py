@@ -9,21 +9,21 @@ from rest_api.api.router.locale.locale_router import router as locale_router
 
 
 def create_app() -> FastAPI:
-    core_app = FastAPI(
+    rest_api = FastAPI(
         title="LocaleIQ chronology, time, and timezone API", version="1.0.0"
     )
 
     # Include chrono routers
-    core_app.include_router(time_router)
-    core_app.include_router(timezone_router)
+    rest_api.include_router(time_router)
+    rest_api.include_router(timezone_router)
 
     # Include locale routers
-    core_app.include_router(locale_router)
+    rest_api.include_router(locale_router)
 
     # Add middleware
-    core_app.add_middleware(TracerMiddleware)
-    core_app.add_middleware(TimerMiddleware)
-    return core_app
+    rest_api.add_middleware(TracerMiddleware)
+    rest_api.add_middleware(TimerMiddleware)
+    return rest_api
 
 
 app = create_app()
