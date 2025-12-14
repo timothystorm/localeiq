@@ -41,8 +41,8 @@ lint:
 
 lint-check:
 	@echo "🎨  ${BLUE}LINT WORKSPACE...${NC}"
-	@poetry run ruff check .
-	@poetry run mypy packages apps
+	@poetry run ruff check --quiet .
+	@poetry run --no-error-summary mypy packages apps
 
 
 setup:
