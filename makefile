@@ -17,6 +17,7 @@ help:
 	@echo "  clean       Clean all build artifacts and virtual environments"
 	@echo "  hooks       Install pre-commit git hooks"
 	@echo "  lint        Run all linting tasks (type-check, lint-fix, format)"
+	@echo "  pre-commit  Run pre-commit checks - useful before committing code"
 	@echo "  setup       Lock and install dependencies"
 	@echo "  test        Run tests synchronously"
 	@echo "  venv        Setup and activate the Poetry virtual environment"
@@ -44,11 +45,15 @@ lint-check:
 	@poetry run ruff check --quiet .
 	@poetry run mypy --no-error-summary packages apps
 
+pre-commit:
+	@echo "🔍  ${BLUE}RUN PRE-COMMIT CHECKS...${NC}"
+	@poetry run pre-commit run --all-files
 
 setup:
 	@echo "🏗️  ${BLUE}SETUP WORKSPACE...${NC}"
 	@poetry lock
 	@poetry install
+	@poetry run pre-commit install
 
 test:
 	@echo "🧪  ${BLUE}TEST WORKSPACE...${NC}"

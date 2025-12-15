@@ -3,9 +3,8 @@ repos:
     rev: v0.14.9
     hooks:
       - id: ruff-format
-        language: system
-      - id: ruff
-        language: system
+      - id: ruff-check
+        args: [ --fix ]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.19.0
@@ -14,3 +13,13 @@ repos:
         language: system
         exclude: "(alembic|migrations)"
         args: [ "--install-types", "--non-interactive" ]
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: pytest
+        language: system
+        pass_filenames: false
+        args: ["--maxfail=1", "--disable-warnings", "-q"]
+        always_run: true
