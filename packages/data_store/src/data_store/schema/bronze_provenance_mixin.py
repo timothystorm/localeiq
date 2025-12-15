@@ -1,4 +1,5 @@
-from sqlalchemy import Column, String, Text, DateTime, func
+from sqlalchemy import String, Text, DateTime, func
+from sqlalchemy.orm import mapped_column
 
 
 class BronzeProvenanceMixin:
@@ -7,15 +8,17 @@ class BronzeProvenanceMixin:
     """
 
     # Provenance
-    source_name = Column(
+    source_name = mapped_column(
         String(64), nullable=False, comment="'CLDR', 'Wikipedia', etc."
     )
-    notes = Column(Text, nullable=True, comment="Optional notes about the record")
+    notes = mapped_column(
+        Text, nullable=True, comment="Optional notes about the record"
+    )
 
     # Audit metadata
-    created_at = Column(
+    created_at = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
-    updated_at = Column(
+    updated_at = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
