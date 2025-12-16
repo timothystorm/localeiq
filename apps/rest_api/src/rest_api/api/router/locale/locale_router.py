@@ -30,7 +30,7 @@ async def get_locales(
     filters: LocaleFilter = Depends(),
     service: LocaleService = Depends(get_locale_service),
 ) -> dict[str, Any]:
-    print(filters)
+    # Get (filtered) locales
     locales = service.get_locales(filters)
 
     # Construct meta-information

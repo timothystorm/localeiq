@@ -22,6 +22,7 @@ class LocaleRepoImpl(LocaleRepo):
         self, filters: Optional[LocaleFilter] = None
     ) -> Sequence[LocaleDto]:
         filters = filters or LocaleFilter()
+        print(filters)
 
         with read_only_session() as session:
             # Build SELECT (core) query
@@ -39,5 +40,6 @@ class LocaleRepoImpl(LocaleRepo):
                     stmt = stmt.where(column.__eq__(value))
 
             # Execute query
+            print(stmt)
             rows = session.execute(stmt).mappings().all()
             return [LocaleDto(**row) for row in rows]
