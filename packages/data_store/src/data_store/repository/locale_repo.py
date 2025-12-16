@@ -1,20 +1,19 @@
 from abc import ABC, abstractmethod
-from typing import Sequence
+from typing import Sequence, Optional
 
-from data_store.dto.locale_dto import LocaleDto
+from data_store.dto.locale_dto import LocaleDto, LocaleFilter
 
 
 class LocaleRepo(ABC):
-    @abstractmethod
-    def read_all(self) -> Sequence[LocaleDto]:
-        """
-        :return: list of all locales in the datastore, ordered by tag
-        """
-        ...
+    """
+    Abstract repository interface for locale data.
+    """
 
     @abstractmethod
-    def read_by_language(self, language: str) -> Sequence[LocaleDto]:
+    def read_locale(
+        self, filters: Optional[LocaleFilter] = None
+    ) -> Sequence[LocaleDto]:
         """
-        :return: list of locales for the given language, ordered by tag
+        :return: list of locales for the given language, ordered by tag and optionally filtered
         """
         ...
