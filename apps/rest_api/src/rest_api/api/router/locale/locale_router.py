@@ -1,18 +1,14 @@
-from typing import Any, TypedDict, NotRequired
+from typing import Sequence
 
 from fastapi import APIRouter, Depends
 
-from data_store.dto.locale_dto import LocaleFilter
+from data_store.dto.cursor_dto import CursorDto
+from data_store.dto.locale_dto import LocaleDto
 from data_store.repository.provider import get_locale_repository
-from rest_api.service.locale.locale_service import LocaleService
+from rest_api.dto.api_dto import Meta, StandardResponse, Page
+from rest_api.service.locale.locale_service import LocaleService, LocaleQuery
 
 router = APIRouter(prefix="/v1/locale", tags=["locale"])
-
-
-# TODO: Move to a common dto package
-class MetaDict(TypedDict):
-    count: int
-    filters: NotRequired[dict[str, Any]]
 
 
 def get_locale_service() -> LocaleService:
@@ -22,23 +18,25 @@ def get_locale_service() -> LocaleService:
 
 @router.get(
     "/",
-    response_model=dict[str, Any],
     description="Get locales supported by LocaleIQ",
     response_model_exclude_none=True,
 )
 async def get_locales(
-    filters: LocaleFilter = Depends(),
+    query: LocaleQuery = Depends(),
     service: LocaleService = Depends(get_locale_service),
-) -> dict[str, Any]:
-    # Get (filtered) locales
-    locales = service.get_locales(filters)
+) -> StandardResponse[Sequence[LocaleDto]]:
+    response: CursorDto[Sequence[LocaleDto]] = service.get_locales(query=query)
 
     # Construct meta-information
-    meta: MetaDict = {"count": len(locales)}
-    if filters is not None:
-        dumped = filters.model_dump(exclude_none=True)
-        if any(v != "" for v in dumped.values()):
-            meta["filters"] = dumped
+    meta: Meta = {"page": Page(size=len(response.data), cursor=response.next or None)}
+    # TODO: Make query param responses part of a debugging option
+    # if query:
+    #     dumped = query.model_dump(exclude_none=True)
+    #     if any(v != "" for v in dumped.values()):
+    #         meta["query"] = dumped
 
-    # Return meta + response
-    return {"meta": meta, "data": [locale.model_dump() for locale in locales]}
+    # Construct response
+    return StandardResponse(
+        meta=meta,
+        data=response.data,
+    )

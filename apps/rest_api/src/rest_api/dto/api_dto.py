@@ -1,4 +1,4 @@
-from typing import Optional, List, Any, Dict, TypeVar, Generic
+from typing import List, Any, Dict, TypeVar, Generic, TypedDict, NotRequired
 
 from pydantic import BaseModel
 
@@ -6,21 +6,28 @@ from pydantic import BaseModel
 T = TypeVar("T")
 
 
-class Meta(BaseModel):
+class Page(TypedDict):
+    size: NotRequired[int | None]
+    cursor: NotRequired[str | None]
+
+
+class Meta(TypedDict):
     """
     Base metadata for API responses.
-
-    - input_params: Optional dictionary of input parameters used in the request.
+    - page: Optional pagination metadata.
+    - query: Optional dictionary of input parameters used in the request.
     - warnings: Optional list of warning messages.
     """
 
-    input_params: Optional[Dict[str, Any]]
-    warnings: Optional[List[str]] = None
+    page: NotRequired[Page]
+    query: NotRequired[Dict[str, Any]]
+    warnings: NotRequired[List[str]]
 
 
 class StandardResponse(BaseModel, Generic[T]):
     """
     Standard API response wrapper.
+
     - meta: Metadata about the response.
     - data: The actual response data of generic type T.
     """

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Sequence, Optional
 
+from data_store.dto.cursor_dto import CursorDto, Cursor
 from data_store.dto.locale_dto import LocaleDto, LocaleFilter
 
 
@@ -11,9 +12,11 @@ class LocaleRepo(ABC):
 
     @abstractmethod
     def read_locale(
-        self, filters: Optional[LocaleFilter] = None
-    ) -> Sequence[LocaleDto]:
+        self, *, filters: LocaleFilter, cursor: Optional[Cursor] = None
+    ) -> CursorDto[Sequence[LocaleDto]]:
         """
-        :return: list of locales for the given language, ordered by tag and optionally filtered
+        :param filters: optional filters to apply when retrieving locales
+        :param cursor: optional cursor for pagination
+        :return: cursored response of locales matching any given filters
         """
         ...

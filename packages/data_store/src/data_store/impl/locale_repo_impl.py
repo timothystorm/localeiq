@@ -2,6 +2,7 @@ from typing import Sequence, Optional
 
 from sqlalchemy import select
 
+from data_store.dto.cursor_dto import Cursor, CursorDto
 from data_store.dto.locale_dto import LocaleDto, LocaleFilter
 from data_store.repository.locale_repo import LocaleRepo
 from data_store.schema.locale_bronze_schema import LocaleBronzeLocale as LocaleSchema
@@ -19,19 +20,18 @@ _FILTER_DICT = {
 
 class LocaleRepoImpl(LocaleRepo):
     def read_locale(
-        self, filters: Optional[LocaleFilter] = None
-    ) -> Sequence[LocaleDto]:
+        self, *, filters: LocaleFilter, cursor: Optional[Cursor] = None
+    ) -> CursorDto[Sequence[LocaleDto]]:
         filters = filters or LocaleFilter()
-        print(filters)
-
         with read_only_session() as session:
-            # Build SELECT (core) query
+            # Build SELECT query
             stmt = select(
+                LocaleSchema.id,
                 LocaleSchema.tag,
                 LocaleSchema.language,
                 LocaleSchema.script,
                 LocaleSchema.region,
-            ).order_by(LocaleSchema.tag)
+            ).order_by(LocaleSchema.tag, LocaleSchema.id)
 
             # Apply filters
             for field, column in _FILTER_DICT.items():
@@ -39,7 +39,21 @@ class LocaleRepoImpl(LocaleRepo):
                 if value:
                     stmt = stmt.where(column.__eq__(value))
 
+            # Apply pagination
+            if cursor:
+                aft = cursor.after
+                lmt = cursor.limit
+                if aft:
+                    stmt = stmt.where(LocaleSchema.tag > aft)
+                if lmt:
+                    # fetch one extra to detect "more"
+                    stmt = stmt.limit(lmt + 1)
+
             # Execute query
-            print(stmt)
             rows = session.execute(stmt).mappings().all()
-            return [LocaleDto(**row) for row in rows]
+
+            # Construct response
+            has_more = len(rows) > lmt if lmt else False
+            items = rows[:lmt] if lmt else rows
+            next_val = str(items[-1]["tag"]) if has_more and items else None
+            return CursorDto(next=next_val, data=[LocaleDto(**row) for row in items])

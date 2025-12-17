@@ -1,9 +1,6 @@
-import re
 from typing import Optional
 
 from pydantic import BaseModel, field_validator
-
-_LOCALE_SPLIT_RE = re.compile(r"[-_]")
 
 
 class LocaleFilter(BaseModel):
