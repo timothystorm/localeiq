@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# Make file for monorepo LocaleIQ project.
+# Make file for WORKSPACE LocaleIQ project.
 #
 # Review the base makefile - ./.makefile_base
 # ----------------------------------------------------------------------------

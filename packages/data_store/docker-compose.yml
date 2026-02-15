@@ -1,4 +1,7 @@
 services:
+
+  # startups a postgres database for local development and testing.
+  # For production, we recommend using a managed database service for PostgreSQL.
   postgres:
     image: postgres:15
     container_name: localeiq-db
@@ -17,6 +20,7 @@ services:
       timeout: 5s
       retries: 5
 
+  # startup a pgadmin instance for local development and testing.
   pgadmin:
     image: dpage/pgadmin4
     container_name: localeiq-pgadmin

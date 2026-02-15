@@ -1,6 +1,6 @@
 import typer
 
-from data_store.impl.locale_repo_impl import LocaleRepoImpl
+from data_store.repository.impl.locale_repo_impl import LocaleRepoImpl
 
 app = typer.Typer()
 

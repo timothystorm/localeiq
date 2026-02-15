@@ -10,13 +10,7 @@ Create your local environment configuration from the template:
    cp .env.local .env
 ```
 
-Then edit `.env` with your actual database credentials. The `.env` file is gitignored and should never be committed.
-
-**Alternative:** Use the interactive setup script:
-
-```bash
-   sh ./setup.env.sh
-```
+Then edit `.env` with your actual database credentials. The `.env` file is git ignored and should never be committed.
 
 ## Setup Database
 

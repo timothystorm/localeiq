@@ -21,8 +21,8 @@ migrate-up:
 help-extra:
 	@echo "  migrate-base     Migrate database to base (empty database) !!"
 	@echo "  migrate-down     Migrate database down one revision"
+	@echo "  migrate-up       Migrate database up one revision"
 	@echo "  migrate-head     Migrate database to latest revision"
 	@echo "  migrate-revision Create new migration revision with message 'm'"
 	@echo "                   Usage: make migrate-revision m='revision_message'"
-	@echo "					  Note: make sure the schema are defined in /schema/__init__.py"
-	@echo "  migrate-up       Migrate database up one revision"
+	@echo "                   ✏️  Note: make sure new schema are listed in src/data_store/schema/__init__.py"

@@ -1,6 +1,8 @@
 # LocaleIQ Development Guide
 
-LocaleIQ is a FastAPI-based REST API providing chronology, time, timezone, and locale management services. The project uses a **Poetry monorepo** architecture with strict submodule isolation.
+<@TODO: edit to a proper definition of LocaleIQ>
+LocaleIQ is a FastAPI-based REST API providing chronology, time, timezone, and locale management services. The project 
+uses a **Poetry monorepo** architecture with strict submodule isolation.
 
 ## Architecture Overview
 
@@ -89,7 +91,7 @@ cd packages/data_store
 
 # Setup database first
 docker compose up -d              # Start PostgreSQL + pgAdmin
-sh ./scripts/setup_env.sh         # Generate .env from setup.env.sh
+cp .env.local .env                # Copy local env from template - edit with your DB credentials
 
 # Run migrations
 make migrate-head                 # Upgrade to latest

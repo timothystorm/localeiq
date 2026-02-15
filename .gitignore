@@ -149,7 +149,6 @@ activemq-data/
 
 # Environments
 .env
-.env.local
 packages/data_store/.env
 .envrc
 .venv
