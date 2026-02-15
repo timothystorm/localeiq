@@ -4,10 +4,18 @@ This package contains shared data models, types, and utilities used across multi
 
 ## Build Project `.env` File
 
-To set up the project environment variables, execute the setup script from the module root.
+Create your local environment configuration from the template:
 
 ```bash
-   sh ./scripts/setup_env.sh
+   cp .env.local .env
+```
+
+Then edit `.env` with your actual database credentials. The `.env` file is gitignored and should never be committed.
+
+**Alternative:** Use the interactive setup script:
+
+```bash
+   sh ./setup.env.sh
 ```
 
 ## Setup Database

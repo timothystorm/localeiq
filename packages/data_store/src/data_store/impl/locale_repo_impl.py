@@ -5,7 +5,9 @@ from sqlalchemy import select
 from data_store.dto.cursor_dto import Cursor, CursorDto
 from data_store.dto.locale_dto import LocaleDto, LocaleFilter
 from data_store.repository.locale_repo import LocaleRepo
-from data_store.schema.locale_bronze_schema import LocaleBronzeLocale as LocaleSchema
+from data_store.schema.bronze.locale_bronze_schema import (
+    LocaleBronzeSchema as LocaleSchema,
+)
 from data_store.transaction import read_only_session
 
 """
@@ -27,11 +29,11 @@ class LocaleRepoImpl(LocaleRepo):
             # Build SELECT query
             stmt = select(
                 LocaleSchema.id,
-                LocaleSchema.tag,
+                LocaleSchema.locale_tag,
                 LocaleSchema.language,
                 LocaleSchema.script,
                 LocaleSchema.region,
-            ).order_by(LocaleSchema.tag, LocaleSchema.id)
+            ).order_by(LocaleSchema.locale_tag, LocaleSchema.id)
 
             # Apply filters
             for field, column in _FILTER_DICT.items():
@@ -44,7 +46,7 @@ class LocaleRepoImpl(LocaleRepo):
                 aft = cursor.after
                 lmt = cursor.limit
                 if aft:
-                    stmt = stmt.where(LocaleSchema.tag > aft)
+                    stmt = stmt.where(LocaleSchema.locale_tag > aft)
                 if lmt:
                     # fetch one extra to detect "more"
                     stmt = stmt.limit(lmt + 1)
@@ -55,5 +57,5 @@ class LocaleRepoImpl(LocaleRepo):
             # Construct response
             has_more = len(rows) > lmt if lmt else False
             items = rows[:lmt] if lmt else rows
-            next_val = str(items[-1]["tag"]) if has_more and items else None
+            next_val = str(items[-1]["locale_tag"]) if has_more and items else None
             return CursorDto(next=next_val, data=[LocaleDto(**row) for row in items])

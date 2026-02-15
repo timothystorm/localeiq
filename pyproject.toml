@@ -51,4 +51,7 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.mypy]
-exclude = ["^alembic/"]
+exclude = [
+    "^alembic/",
+    ".*/conftest\\.py$"
+]

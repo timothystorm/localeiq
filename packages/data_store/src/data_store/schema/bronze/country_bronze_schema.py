@@ -4,7 +4,7 @@ from sqlalchemy import String, UUID, Text
 from sqlalchemy.orm import mapped_column
 
 from data_store.schema.base import Base
-from data_store.schema.bronze_provenance_mixin import BronzeProvenanceMixin
+from data_store.schema.bronze.bronze_provenance_mixin import BronzeProvenanceMixin
 
 
 class CountryBronzeSchema(BronzeProvenanceMixin, Base):
