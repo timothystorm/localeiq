@@ -29,7 +29,7 @@ class LocaleFilter(BaseModel):
 
 
 class LocaleDto(BaseModel):
-    tag: str
+    locale: str
     language: str
     script: str | None
     region: str | None

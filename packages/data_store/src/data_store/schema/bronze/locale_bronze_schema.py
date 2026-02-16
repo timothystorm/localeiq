@@ -12,7 +12,7 @@ class LocaleBronzeSchema(BronzeProvenanceMixin, Base):
 
     __tablename__ = "locales"
     __table_args__ = (
-        Index("idx_locale_tag", "locale_tag"),
+        Index("idx_locale", "locale"),
         Index("idx_locale_language", "language"),
         Index("idx_locale_script", "script"),
         Index("idx_locale_region", "region"),
@@ -20,9 +20,9 @@ class LocaleBronzeSchema(BronzeProvenanceMixin, Base):
     )
 
     id = Column(Integer, primary_key=True)
-    locale_tag = mapped_column(
+    locale = mapped_column(
         String(32),
-        comment="language tag: en, es-MX, en-US, en-Latn-US, zh_Hans_CN, zh",
+        comment="locale tag: en, es-MX, en-US, en-Latn-US, zh_Hans_CN, zh",
     )
     language = mapped_column(
         String(16),
@@ -42,4 +42,4 @@ class LocaleBronzeSchema(BronzeProvenanceMixin, Base):
 
     def __repr__(self):
         parent = f"\n↑↑{super().__repr__()}" if super().__repr__() else ""
-        return f"<bronze.locale(id={self.id}, tag={self.tag}, language={self.language}, script={self.script}, region={self.region})>{parent}"
+        return f"<bronze.locale(id={self.id}, locale={self.locale}, language={self.language}, script={self.script}, region={self.region})>{parent}"

@@ -1,17 +1,25 @@
 # locale/domain/locale_query.py
-from typing import Optional
+from typing import Optional, Annotated
 from typing import Sequence
 
+from fastapi import Query
 from pydantic import BaseModel, field_validator
 
 from data_store.dto.cursor_dto import CursorDto, Cursor
 from data_store.dto.locale_dto import LocaleDto, LocaleFilter
 from data_store.repository.locale_repo import LocaleRepo
-from data_store.utils.normalize_locale_tag import normalize_locale_tag
+from data_store.utils.normalize_locale import normalize_locale
 
 
 class LocaleQuery(BaseModel):
-    language: Optional[str] = None
+    language: Annotated[
+        Optional[str],
+        Query(
+            default=None,
+            description="BCP 47 langusage subtag (e.g., `en`, `fr`).",
+            examples=["en"],
+        ),
+    ] = None
     region: Optional[str] = None
     script: Optional[str] = None
     after: Optional[str] = None
@@ -20,7 +28,7 @@ class LocaleQuery(BaseModel):
     @field_validator("after", mode="before")
     @classmethod
     def normalize_after(cls, v):
-        return normalize_locale_tag(v) if v else v
+        return normalize_locale(v) if v else v
 
     @field_validator("limit")
     @classmethod

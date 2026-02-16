@@ -18,7 +18,7 @@ To set up the database for the LocaleIQ Data Shared package, follow these steps:
 
 1. Run `docker compose` to start the database service.
 ```bash
-   docker compose -f docker-compose.yml up -d
+   docker compose -f docker-compose.local.yml up -d
 ```
 2. Test connection to the database using `psql` or any PostgreSQL client.
 ```bash

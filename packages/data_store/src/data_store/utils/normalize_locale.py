@@ -4,22 +4,22 @@ from typing import Optional
 _LOCALE_SPLIT_RE = re.compile(r"[-_]")
 
 
-def normalize_locale_tag(tag: Optional[str]) -> Optional[str]:
+def normalize_locale(locale: Optional[str]) -> Optional[str]:
     """
-    Normalizes locale tags.
+    Normalizes locale.
 
     fr-ca -> fr-CA
     FR_ca -> fr-CA
     zh_hant_tw -> zh-Hant-TW
     es-419 -> es-419
 
-    :param tag to normalize
+    :param locale to normalize
     :return: normalized locale tag or None if tag is empty
     """
-    if not tag:
+    if not locale:
         return None
 
-    parts = _LOCALE_SPLIT_RE.split(tag.strip())
+    parts = _LOCALE_SPLIT_RE.split(locale.strip())
     if not parts:
         return None
 

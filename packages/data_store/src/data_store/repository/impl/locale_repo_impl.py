@@ -29,11 +29,11 @@ class LocaleRepoImpl(LocaleRepo):
             # Build SELECT query
             stmt = select(
                 LocaleSchema.id,
-                LocaleSchema.locale_tag,
+                LocaleSchema.locale,
                 LocaleSchema.language,
                 LocaleSchema.script,
                 LocaleSchema.region,
-            ).order_by(LocaleSchema.locale_tag, LocaleSchema.id)
+            ).order_by(LocaleSchema.locale, LocaleSchema.id)
 
             # Apply filters
             for field, column in _FILTER_DICT.items():
@@ -46,7 +46,7 @@ class LocaleRepoImpl(LocaleRepo):
                 aft = cursor.after
                 lmt = cursor.limit
                 if aft:
-                    stmt = stmt.where(LocaleSchema.locale_tag > aft)
+                    stmt = stmt.where(LocaleSchema.locale > aft)
                 if lmt:
                     # fetch one extra to detect "more"
                     stmt = stmt.limit(lmt + 1)
@@ -57,5 +57,5 @@ class LocaleRepoImpl(LocaleRepo):
             # Construct response
             has_more = len(rows) > lmt if lmt else False
             items = rows[:lmt] if lmt else rows
-            next_val = str(items[-1]["locale_tag"]) if has_more and items else None
+            next_val = str(items[-1]["locale"]) if has_more and items else None
             return CursorDto(next=next_val, data=[LocaleDto(**row) for row in items])

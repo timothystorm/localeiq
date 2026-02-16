@@ -3,6 +3,7 @@ from typing import Optional
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# The .env file is expected to be located two levels up from this file, i.e., at the root of the project.
 BASE_ENV = Path(__file__).resolve().parents[2] / ".env"
 
 

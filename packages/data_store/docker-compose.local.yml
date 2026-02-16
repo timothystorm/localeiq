@@ -1,9 +1,11 @@
+# This docker-compose file is used for local development and testing of the data store.
+# It starts a postgres database and a pgadmin instance for managing the database.
 services:
 
   # startups a postgres database for local development and testing.
   # For production, we recommend using a managed database service for PostgreSQL.
   postgres:
-    image: postgres:15
+    image: postgres:17-alpine
     container_name: localeiq-db
     restart: unless-stopped
     environment:
@@ -13,16 +15,18 @@ services:
     volumes:
       - localeiq_data_volume:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:${DB_PORT}"
+    networks:
+      - localeiq-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U localeiq" ]
+      test: [ "CMD-SHELL", "pg_isready --username=${DB_USER} --dbname=${DB_NAME}" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
   # startup a pgadmin instance for local development and testing.
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     container_name: localeiq-pgadmin
     restart: unless-stopped
     environment:
@@ -30,12 +34,21 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
     ports:
-      - "8080:80"
+      - "${PGADMIN_PORT}:80"
     volumes:
       - localeiq_pgadmin_volume:/var/lib/pgadmin
+    networks:
+      - localeiq-network
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
+# Define the volumes for persisting data and pgadmin configuration.
 volumes:
   localeiq_data_volume:
   localeiq_pgadmin_volume:
+
+# Define the network for the services to communicate with each other.
+networks:
+  localeiq-network:
+    driver: bridge

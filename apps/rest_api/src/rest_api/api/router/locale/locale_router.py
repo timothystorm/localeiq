@@ -16,6 +16,7 @@ def get_locale_service() -> LocaleService:
     return LocaleService(get_locale_repository())
 
 
+@router.get("")
 @router.get(
     "/",
     description="Get locales supported by LocaleIQ",
