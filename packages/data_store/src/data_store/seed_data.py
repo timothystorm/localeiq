@@ -1,10 +1,12 @@
 from sqlalchemy.orm import Session
 
-from data_store.engine import engine
+from data_store.engine import get_engine
 from data_store.schema import LocaleBronzeSchema
+from data_store.settings import get_settings
 
 
 def seed_locales():
+    engine = get_engine(get_settings())
     with Session(engine) as session:
         # Check if already seeded
         if session.query(LocaleBronzeSchema).count() > 0:
