@@ -1,15 +1,18 @@
+from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# The .env file is expected to be located two levels up from this file, i.e., at the root of the project.
-BASE_ENV = Path(__file__).resolve().parents[2] / ".env"
+
+def _get_default_env_path() -> str:
+    """Get default .env path, two levels up from this file."""
+    return str(Path(__file__).resolve().parents[2] / ".env")
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=str(BASE_ENV), env_file_encoding="utf-8", extra="ignore"
+        env_file=_get_default_env_path(), env_file_encoding="utf-8", extra="ignore"
     )
 
     DB_HOST: Optional[str] = None
@@ -26,4 +29,10 @@ class Settings(BaseSettings):
         raise RuntimeError("DB_URL not provided in environment")
 
 
-settings = Settings()
+@lru_cache
+def get_settings() -> Settings:
+    """
+    Cached settings factory. Use this for dependency injection.
+    The lru_cache ensures singleton behavior but allows overriding in tests.
+    """
+    return Settings()
