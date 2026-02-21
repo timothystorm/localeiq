@@ -6,19 +6,15 @@ on:
   workflow_dispatch:
 
 env:
-  PYTHON_VERSION: "3.13"
   POETRY_VERSION: "2.2.1"
   POETRY_VIRTUALENVS_IN_PROJECT: "true"
-  PYTHONPATH: >
-    ${{ github.workspace }}/apps/cli_tool/src:
-    ${{ github.workspace }}/apps/rest_api/src:
-    ${{ github.workspace }}/packages/data_store/src:
-    ${{ github.workspace }}/packages/utils/src
+  PYTHON_VERSION: "3.13"
 
 jobs:
-  build-and-test:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,16 +24,84 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
+      - name: Cache Poetry dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .venv
+            ~/.cache/pypoetry
+          key: poetry-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            poetry-${{ runner.os }}-${{ env.PYTHON_VERSION }}-
+
+      - name: Cache pre-commit hooks
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+
       - name: Install Poetry
         run: |
           python -m pip install --upgrade pip
-          python -m pip install "poetry==${POETRY_VERSION}"
+          python -m pip install "poetry==${{ env.POETRY_VERSION }}"
 
       - name: Install dependencies
-        run: make setup
+        run: poetry install
 
-      - name: Lint
+      - name: Run linters
         run: make lint-check
 
-      - name: Test
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache Poetry dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .venv
+            ~/.cache/pypoetry
+          key: poetry-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            poetry-${{ runner.os }}-${{ env.PYTHON_VERSION }}-
+
+      - name: Install Poetry
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "poetry==${{ env.POETRY_VERSION }}"
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run tests
         run: make test
+
+  # Future: Add integration tests that require database
+  # integration:
+  #   name: Integration Tests
+  #   needs: [lint, test]
+  #   runs-on: ubuntu-latest
+  #   services:
+  #     postgres:
+  #       image: postgres:17
+  #       env:
+  #         POSTGRES_PASSWORD: test
+  #         POSTGRES_DB: localeiq_test
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Run integration tests
+  #       run: pytest tests/integration

@@ -14,12 +14,5 @@ repos:
         exclude: "(alembic/|migrations/|/conftest\\.py$)"
         args: [ "--install-types", "--non-interactive" ]
 
-  - repo: local
-    hooks:
-      - id: pytest
-        name: pytest
-        entry: pytest
-        language: system
-        pass_filenames: false
-        args: ["--maxfail=1", "--disable-warnings", "-q"]
-        always_run: true
+# Tests removed from pre-commit - run via `make test` or in CI
+# Fast checks only in pre-commit to keep developer flow smooth
