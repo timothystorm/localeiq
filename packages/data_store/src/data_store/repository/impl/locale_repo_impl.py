@@ -11,7 +11,7 @@ from data_store.schema.bronze.locale_bronze_schema import (
 )
 
 """
-Mapping of filter fields to their corresponding schema
+Mapping of filter fields to corresponding schema
 """
 _FILTER_DICT = {
     "language": LocaleSchema.language,
@@ -31,6 +31,10 @@ class LocaleRepoImpl(LocaleRepo):
         self, *, filters: LocaleFilter, cursor: Optional[Cursor] = None
     ) -> CursorDto[Sequence[LocaleDto]]:
         filters = filters or LocaleFilter()
+        page_limit = min(
+            (cursor.limit if cursor and cursor.limit else MAX_PAGINATION_LIMIT),
+            MAX_PAGINATION_LIMIT,
+        )
 
         # Build SELECT query
         stmt = select(
@@ -43,26 +47,23 @@ class LocaleRepoImpl(LocaleRepo):
 
         # Apply filters
         for field, column in _FILTER_DICT.items():
-            value = getattr(filters, field)
-            if value:
+            if value := getattr(filters, field, None):
                 stmt = stmt.where(column.__eq__(value))
 
-        # Apply pagination with enforced limits
-        lmt = MAX_PAGINATION_LIMIT  # Default limit
-        if cursor and cursor.limit is not None:
-            lmt = min(cursor.limit, MAX_PAGINATION_LIMIT)
-
+        # Apply cursor-based filtering for pagination
         if cursor and cursor.after:
             stmt = stmt.where(LocaleSchema.locale > cursor.after)
 
-        # Always apply limit (fetch one extra to detect "more")
-        stmt = stmt.limit(lmt + 1)
+        # Fetch one extra record to determine if there's a next page
+        stmt = stmt.limit(page_limit + 1)
 
         # Execute query
-        rows = self._session.execute(stmt).mappings().all()
+        results = self._session.execute(stmt).mappings().all()
+        items = [LocaleDto.model_validate(row) for row in results]
 
-        # Construct response
-        has_more = len(rows) > lmt
-        items = rows[:lmt]
-        next_val = str(items[-1]["locale"]) if has_more and items else None
-        return CursorDto(next=next_val, data=[LocaleDto(**row) for row in items])
+        # Determine next cursor
+        has_more = len(items) > page_limit
+        next_cursor = items[page_limit - 1].locale if has_more else None
+
+        # Return paginated and mapped response
+        return CursorDto(next=next_cursor, data=items[:page_limit])
