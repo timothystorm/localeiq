@@ -28,9 +28,8 @@ class LocaleRepoImpl(LocaleRepo):
         self._session = session
 
     def read_locale(
-        self, *, filters: LocaleFilter, cursor: Optional[Cursor] = None
+        self, *, filters: Optional[LocaleFilter], cursor: Optional[Cursor] = None
     ) -> CursorDto[Sequence[LocaleDto]]:
-        filters = filters or LocaleFilter()
         page_limit = min(
             (cursor.limit if cursor and cursor.limit else MAX_PAGINATION_LIMIT),
             MAX_PAGINATION_LIMIT,

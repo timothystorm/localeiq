@@ -50,7 +50,7 @@ venv:
 # Start development server (REST API)
 dev:
     @echo "🚀 Starting development server..."
-    cd apps/rest_api && poetry run uvicorn rest_api.start:app --reload --reload-dir . --reload-dir ../../packages --host 0.0.0.0 --port 8000
+    cd apps/rest_api && poetry run uvicorn rest_api.start:app --reload --reload-dir . --reload-dir {{justfile_directory()}}/packages --host 0.0.0.0 --port 8000
 
 # Start development server with specific port
 dev-port port:
