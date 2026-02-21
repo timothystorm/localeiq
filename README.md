@@ -269,8 +269,9 @@ See [TESTING.md](./TESTING.md) for comprehensive testing guide.
 1. Create a feature branch from `main`
 2. Make your changes following existing patterns
 3. Run quality checks: `just ci` (runs lint + test)
-4. Commit (pre-commit hooks will run automatically)
-5. Push and submit a pull request
+4. **Optional**: Get an AI-powered code review: `./ai/code_review.sh`
+5. Commit (pre-commit hooks will run automatically)
+6. Push and submit a pull request
 
 ### Pre-Commit Workflow
 
