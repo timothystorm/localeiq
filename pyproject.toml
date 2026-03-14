@@ -27,7 +27,8 @@ authors = [
     { name = "Timothy Storm", email = "timothystorm@gmail.com" }
 ]
 readme = "README.md"
-requires-python = ">=3.13,<3.14"
+requires-python = ">=3.13,<3.15"
+dynamic = ["dependencies"]
 
 [tool.poetry]
 package-mode = false
@@ -46,6 +47,7 @@ pre-commit = "^4.5.0"
 pytest = "^9.0"
 pytest-xdist = "^3.8"
 ruff = "^0.14"
+pip-audit = "^2.10.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

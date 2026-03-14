@@ -41,21 +41,17 @@ update:
 # Activate virtual environment (shows command to run)
 venv:
     @echo "🐍 To activate the virtual environment, run:"
-    @echo "   poetry shell"
+    @poetry env activate
 
 # -----------------------------------------------------------------------------
 # Development
 # -----------------------------------------------------------------------------
 
 # Start development server (REST API)
-dev:
-    @echo "🚀 Starting development server..."
-    cd apps/rest_api && poetry run uvicorn rest_api.start:app --reload --reload-dir . --reload-dir {{justfile_directory()}}/packages --host 0.0.0.0 --port 8000
-
-# Start development server with specific port
-dev-port port:
+default_port := '8000'
+dev port=default_port:
     @echo "🚀 Starting development server on port {{port}}..."
-    cd apps/rest_api && poetry run uvicorn rest_api.start:app --reload --host 0.0.0.0 --port {{port}}
+    @cd apps/rest_api && poetry run uvicorn rest_api.start:app --reload --reload-dir . --reload-dir {{justfile_directory()}}/packages --host 0.0.0.0 --port {{port}}
 
 # Run CLI tool
 cli *ARGS:
@@ -260,7 +256,7 @@ info:
 # Check dependencies for security issues (requires safety)
 security:
     @echo "🔒 Checking for security vulnerabilities..."
-    poetry run pip-audit || echo "Install pip-audit: pip install pip-audit"
+    @poetry run pip-audit || echo "Install pip-audit: poertry add --dev pip-audit"
 
 # Show outdated dependencies
 outdated:
